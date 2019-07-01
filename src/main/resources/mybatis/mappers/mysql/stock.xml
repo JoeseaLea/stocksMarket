@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joesea.stocksmarket.dao.StockDao">
+	<sql id="common_sql">
+		t.id,
+		t.code,
+		t.name
+	</sql>
+	<insert id="insertOrUpdateStock" parameterType="com.joesea.stocksmarket.vo.StockVo">
+		insert into `stock` (`code`, `name`)
+		values
+		(#{stock.code}, #{stock.name})
+		on duplicate key update `name` = #{stock.name}
+	</insert>
+</mapper> 

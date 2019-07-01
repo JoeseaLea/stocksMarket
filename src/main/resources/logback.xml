@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" scanPeriod="100 seconds" debug="false">
+
+    <property name="log.dir" value="logs" />
+    <property name="logger.level" value="info" />
+
+    <!--控制台日志输出设置-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p [%C.%M:%L] : %m%n</pattern>
+        </layout>
+    </appender>
+
+    <appender name="stocksMarket" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/stocksMarket.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p [%C.%M:%L] : %m%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.dir}/histories/stocksMarket-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <root level="${logger.level}">
+        <appender-ref ref="console" />
+        <appender-ref ref="stocksMarket" />
+    </root>
+</configuration>
