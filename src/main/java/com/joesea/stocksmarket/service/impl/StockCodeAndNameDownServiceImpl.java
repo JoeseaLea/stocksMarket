@@ -1,31 +1,32 @@
-package com.joesea.stocksmarket.uitl;
+package com.joesea.stocksmarket.service.impl;
 
 import com.joesea.stocksmarket.dao.StockDao;
+import com.joesea.stocksmarket.service.StockCodeAndNameDownService;
+import com.joesea.stocksmarket.uitl.StockCurDataDownUtil;
 import com.joesea.stocksmarket.vo.StockVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>@author : Joesea Lea</p>
- * <p>@date : 2019/6/30</p>
+ * <p>@date : 2019/7/2</p>
  * <p>@description : 下载股票代码及名称</p>
  */
-@Component
-public class StockCodeAndNameDownUtil {
+@Service
+public class StockCodeAndNameDownServiceImpl implements StockCodeAndNameDownService {
+
+    private static final Logger logger = LoggerFactory.getLogger(StockCodeAndNameDownServiceImpl.class);
 
     @Autowired
     private StockDao stockDao;
 
-    /**
-     * 下载所有股票代码及名称
-     * @return 所有股票代码及名称
-     */
+    @Override
     public void downAllStockCodeAndName() {
 
         List<String> stockCodes = new ArrayList<String>();
@@ -82,16 +83,12 @@ public class StockCodeAndNameDownUtil {
             }
         }
 
-        System.err.println("-------finish---------");
+        logger.info("股票代码及名称下载完成！");
 
     }
 
-    /**
-     * 根据传入股票代码筛选有效股票代码及名称
-     * @param stockCodes 股票代码
-     * @return 有效股票代码及名称
-     */
-    private void getValidStockCodeAndName(List<String> stockCodes) {
+    @Override
+    public void getValidStockCodeAndName(List<String> stockCodes) {
         String stockCurDataStr = StockCurDataDownUtil.curDataDown(stockCodes);
         if (StringUtils.isEmpty(stockCurDataStr)) {
             return;

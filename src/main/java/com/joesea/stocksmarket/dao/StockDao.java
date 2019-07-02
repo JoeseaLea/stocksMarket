@@ -1,12 +1,10 @@
 package com.joesea.stocksmarket.dao;
 
 import com.joesea.stocksmarket.vo.StockVo;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>@author : Joesea Lea</p>
@@ -15,5 +13,15 @@ import java.util.Map;
  */
 @Repository
 public interface StockDao {
+    /**
+     * 插入股票
+     * @param stock 股票实体
+     */
     void insertOrUpdateStock(@Param(value = "stock") StockVo stock);
+
+    /**
+     * 获取所有股票代码
+     * @return
+     */
+    List<String> getAllStockCode();
 }
