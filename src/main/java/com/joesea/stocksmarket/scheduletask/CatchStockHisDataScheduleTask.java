@@ -2,7 +2,6 @@ package com.joesea.stocksmarket.scheduletask;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -12,14 +11,13 @@ import org.springframework.stereotype.Component;
  * <p>@description : 抓取股票历史数据定时任务。</p>
  */
 @Component
-@EnableScheduling
+//@EnableScheduling
 public class CatchStockHisDataScheduleTask {
     private static final Logger logger = LoggerFactory.getLogger(CatchStockHisDataScheduleTask.class);
 
 //    @Scheduled(cron = "0/50 * * * * ?")
-    @Scheduled(cron = "0 1/1 * * * ?")
+    @Scheduled(cron = "0 */1 * * * ?")
     private void catchStocksHisData() {
-        logger.info("------------------------------");
 
        /* try {
             BufferedReader reader = StockHisDataDownUtil.download("http://quotes.money.163.com/service/chddata.html?code=1002152&start=20070813&end=20190621&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP");

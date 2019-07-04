@@ -21,7 +21,19 @@ public interface StockDao {
 
     /**
      * 获取所有股票代码
-     * @return
+     * @return 所有股票代码
      */
     List<String> getAllStockCode();
+
+    /**
+     * 获取所有未下载历史数据的股票代码
+     * @return 所有未下载历史数据的股票代码
+     */
+    List<String> getAllNotDownHisDataStockCode();
+
+    /**
+     * 更新历史数据下载情况
+     * @param stock 股票实体
+     */
+    void updateHisDataDownFlag(@Param(value = "stock") StockVo stock);
 }

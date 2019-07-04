@@ -16,4 +16,12 @@
 	<select id="getAllStockCode" resultType="java.lang.String">
 		select `code` from `stock`
 	</select>
+	<select id="getAllNotDownHisDataStockCode" resultType="java.lang.String">
+		select `code` from `stock` where `his_data_down_flag` = 0
+	</select>
+	<update id="updateHisDataDownFlag" parameterType="com.joesea.stocksmarket.vo.StockVo">
+		update `stock`
+		set his_data_down_flag = #{stock.hisDataDownFlag}
+		where code = #{stock.code}
+	</update>
 </mapper> 

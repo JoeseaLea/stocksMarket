@@ -14,15 +14,26 @@ spring:
 #  # mapper映射文件
   mapper-locations: classpath:mybatis/mappers/mysql/**/*.xml
 
-stock:
-  curdata:
-    down:
-      host: http://hq.sinajs.cn/list=
+# 股票实时数据下载接口地址
+stock.curdata.down.host: http://hq.sinajs.cn/list=
+
+# 股票历史数据下载配置
+# host: 下载地址
+# fields: 下载字段，多个字段以分号间隔（不配置默认为全部字段: TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP）
+# startTime: 起始时间（不配置默认为19900101）
+# endTime: 结束时间（不配置默认为当前时间）
+# localDir: csv文件保存路径（不配置默认当前目录下的stockHisData）
+stock.hisdata.down:
+    host: http://quotes.money.163.com/service/chddata.html
+    #fields: TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP
+    startTime: 19900101
+    #endTime: 20190621
+    #localDir: stockHisData.xml
 
 #logging.level.com.joesea.stocksmarket.dao: debug
 logging:
   config: classpath:logback.xml
   level:
-    com.joesea.stocksmarket.dao: debug
+    com.joesea.stocksmarket.dao: info
 
 

@@ -26,8 +26,27 @@
         </rollingPolicy>
     </appender>
 
+    <appender name="stockHisDataDownLoadFail" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/stockHisDataDownLoadFail.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p [%C.%M:%L] : %m%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.dir}/histories/stockHisDataDownLoadFail-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+
     <root level="${logger.level}">
         <appender-ref ref="console" />
         <appender-ref ref="stocksMarket" />
     </root>
+
+    <logger name="stockHisDataDownLoadFail" levle="${logger.level}">
+        <appender-ref ref="stockHisDataDownLoadFail" />
+    </logger>
 </configuration>

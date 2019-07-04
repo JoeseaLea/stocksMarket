@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joesea.stocksmarket.dao.StockHisDataDao">
+    <sql id="common_sql">
+		`id` as id,
+        `trans_date` as transDate,
+        `stock_code` as stockCode,
+        `t_open` as tOpen,
+        `t_close` as tClose,
+        `t_high` as tHigh,
+        `t_low` as tLow,
+        `l_close` as lClose,
+        `chg` as chg,
+        `pchg` as pchg,
+        `turn_over` as turnOver,
+        `vo_turn_over` as voTurnOver,
+        `tcap` as tcap,
+        `mcap` as mcap
+	</sql>
+    <insert id="insertOrUpdateStockHisData" parameterType="com.joesea.stocksmarket.vo.StockHisDataVo">
+        INSERT INTO `stock_his_data`
+        (
+            `id`,
+            `trans_date`,
+            `stock_code`,
+            `t_open`,
+            `t_close`,
+            `t_high`,
+            `t_low`,
+            `l_close`,
+            `chg`,
+            `pchg`,
+            `turn_over`,
+            `vo_turn_over`,
+            `va_turn_over`,
+            `tcap`,
+            `mcap`
+        )
+        VALUES
+        (
+            #{stockHisData.id},
+            #{stockHisData.transDate},
+            #{stockHisData.stockCode},
+            #{stockHisData.tOpen},
+            #{stockHisData.tClose},
+            #{stockHisData.tHigh},
+            #{stockHisData.tLow},
+            #{stockHisData.lClose},
+            #{stockHisData.chg},
+            #{stockHisData.pchg},
+            #{stockHisData.turnOver},
+            #{stockHisData.voTurnOver},
+            #{stockHisData.vaTurnOver},
+            #{stockHisData.tcap},
+            #{stockHisData.mcap}
+        )
+        on duplicate key update
+            `t_open`=#{stockHisData.tOpen},
+            `t_close`=#{stockHisData.tClose},
+            `t_high`=#{stockHisData.tHigh},
+            `t_low`=#{stockHisData.tLow},
+            `l_close`=#{stockHisData.lClose},
+            `chg`=#{stockHisData.chg},
+            `pchg`=#{stockHisData.pchg},
+            `turn_over`=#{stockHisData.turnOver},
+            `vo_turn_over`=#{stockHisData.voTurnOver},
+            `va_turn_over`=#{stockHisData.vaTurnOver},
+            `tcap`=#{stockHisData.tcap},
+            `mcap`=#{stockHisData.mcap};
+	</insert>
+
+</mapper>

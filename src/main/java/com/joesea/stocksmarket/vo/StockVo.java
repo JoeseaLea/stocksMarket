@@ -18,6 +18,11 @@ public class StockVo {
      * 股票名称
      */
     private String name;
+    /**
+     * 历史数据下载标志
+     * 0:未下载   1:已下载
+     */
+    private int hisDataDownFlag;
 
     public long getId() {
         return id;
@@ -41,5 +46,13 @@ public class StockVo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getHisDataDownFlag() {
+        return hisDataDownFlag;
+    }
+
+    public void setHisDataDownFlag(int hisDataDownFlag) {
+        this.hisDataDownFlag = hisDataDownFlag;
     }
 }

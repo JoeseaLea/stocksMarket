@@ -1,7 +1,7 @@
 package com.joesea.stocksmarket;
 
-import com.joesea.stocksmarket.dao.StockDao;
 import com.joesea.stocksmarket.service.StockCodeAndNameDownService;
+import com.joesea.stocksmarket.service.StockHisDataDownService;
 import com.joesea.stocksmarket.uitl.StockCurDataDownUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class StocksmarketApplication implements CommandLineRunner {
 	@Autowired
 	private StockCodeAndNameDownService stockCodeAndNameDownService;
 	@Autowired
-	private StockDao stockDao;
+	private StockHisDataDownService stockHisDataDownService;
 
 	@Value("${stock.curdata.down.host}")
 	private String host;
@@ -30,13 +30,12 @@ public class StocksmarketApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 		init();
-//		stockCodeAndNameDownService.downAllStockCodeAndName();
-//		List<String> stockCodes = stockDao.getAllStockCode();
-//		System.out.println(stockCodes);
+
 	}
 
 	private void init() {
 		StockCurDataDownUtil.setHost(host);
-		stockCodeAndNameDownService.downAllStockCodeAndName();
+//		stockCodeAndNameDownService.downAllStockCodeAndName();
+		stockHisDataDownService.downAllStockHisData();
 	}
 }

@@ -2,6 +2,8 @@ package com.joesea.stocksmarket.uitl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -13,25 +15,68 @@ import java.net.URL;
  * <p>@date : 2019/6/28</p>
  * <p>@description : </p>
  */
+@Component
 public class StockHisDataDownUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(StockHisDataDownUtil.class);
+    private static final Logger downFailLogger = LoggerFactory.getLogger("stockHisDataDownLoadFail");
+
+    private static String host;
+    private static String fields;
+    private static String startTime;
+    private static String endTime;
+
+    public static boolean downloadStockHisDataCsv(String code, String localFilePath){
+        StringBuilder url = new StringBuilder();
+
+        for (int i = 1; i < 10; i ++) {
+            boolean downResult = false;
+            url.append(host)
+                    .append("?code=").append(i).append(code)
+                    .append("&start=").append(startTime);
+            if (!"default".equals(endTime)) {
+                url.append("&end=").append(endTime);
+            }
+            url.append("&fields=").append(fields);
+
+            try {
+                URL urlFile = new URL(url.toString());
+                downResult = downloadCsv(urlFile, localFilePath);
+            } catch (MalformedURLException e) {
+                logger.error("url解析错误", e);
+            }
+
+            if (true == downResult) {
+                File file = new File(localFilePath);
+                if(108 < file.length()) {
+                    logger.info(url.toString());
+                    return true;
+                } else {
+                    file.delete();
+                    downFailLogger.info(url.toString());
+                }
+            }
+        }
+
+        return false;
+    }
 
     /**
      * 下载指定url数据，并保存至指定路径
-     * @param url csv文件下载路径
+     * @param urlFile csv文件下载URL
      * @param localFilePath csv文件保存路径
      */
-    public static void downloadCsv(String url, String localFilePath){
-
-        URL urlFile;
+    public static boolean downloadCsv(URL urlFile, String localFilePath){
         HttpURLConnection httpUrl = null;
         BufferedInputStream bis = null;
         BufferedOutputStream bos = null;
         File localFile = new File(localFilePath);
 
+        if (!localFile.getParentFile().exists()) {
+            localFile.getParentFile().mkdirs();
+        }
+
         try {
-            urlFile = new URL(url);
             httpUrl = (HttpURLConnection)urlFile.openConnection();
             httpUrl.connect();
 
@@ -46,6 +91,7 @@ public class StockHisDataDownUtil {
 
             bos.flush();
             logger.info(localFilePath + "下载完成");
+            return true;
         } catch (MalformedURLException e) {
             logger.error("url格式不正确", e);
         } catch (IOException e) {
@@ -67,6 +113,26 @@ public class StockHisDataDownUtil {
 
         }
 
+        return false;
+    }
 
+    @Value(value = "${stock.hisdata.down.host:http://quotes.money.163.com/service/chddata.html}")
+    public void setHost(String host) {
+        StockHisDataDownUtil.host = host;
+    }
+
+    @Value(value = "${stock.hisdata.down.fields:TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP}")
+    public void setFields(String fields) {
+        StockHisDataDownUtil.fields = fields;
+    }
+
+    @Value(value = "${stock.hisdata.down.startTime:19900101}")
+    public void setStartTime(String startTime) {
+        StockHisDataDownUtil.startTime = startTime;
+    }
+
+    @Value(value = "${stock.hisdata.down.endTime:default}")
+    public void setEndTime(String endTime) {
+        StockHisDataDownUtil.endTime = endTime;
     }
 }
