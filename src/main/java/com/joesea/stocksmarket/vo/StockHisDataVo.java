@@ -66,6 +66,10 @@ public class StockHisDataVo {
      * 流通市值
      */
     private String mcap;
+    /**
+     * 股票交易标志(1:正常    0:停牌)
+     */
+    private int marketFlag;
 
     public String getId() {
         return id;
@@ -185,5 +189,35 @@ public class StockHisDataVo {
 
     public void setMcap(String mcap) {
         this.mcap = mcap;
+    }
+
+    public int getMarketFlag() {
+        return marketFlag;
+    }
+
+    public void setMarketFlag(int marketFlag) {
+        this.marketFlag = marketFlag;
+    }
+
+    @Override
+    public String toString() {
+        return "StockHisDataVo{" +
+                "id='" + id + '\'' +
+                ", transDate='" + transDate + '\'' +
+                ", stockCode='" + stockCode + '\'' +
+                ", tOpen=" + tOpen +
+                ", tClose=" + tClose +
+                ", tHigh=" + tHigh +
+                ", tLow=" + tLow +
+                ", lClose=" + lClose +
+                ", chg=" + chg +
+                ", pchg=" + pchg +
+                ", turnOver=" + turnOver +
+                ", voTurnOver='" + voTurnOver + '\'' +
+                ", vaTurnOver='" + vaTurnOver + '\'' +
+                ", tcap='" + tcap + '\'' +
+                ", mcap='" + mcap + '\'' +
+                ", marketFlag=" + marketFlag +
+                '}';
     }
 }

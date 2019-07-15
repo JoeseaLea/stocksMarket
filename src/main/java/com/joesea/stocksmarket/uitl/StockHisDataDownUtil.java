@@ -9,6 +9,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.regex.Pattern;
 
 /**
  * <p>@author : Joesea Lea</p>
@@ -27,10 +28,17 @@ public class StockHisDataDownUtil {
     private static String endTime;
 
     public static boolean downloadStockHisDataCsv(String code, String localFilePath){
-        StringBuilder url = new StringBuilder();
 
-        for (int i = 1; i < 10; i ++) {
+        for (int i = 0; i < 10; i ++) {
+
+            if (Pattern.matches("^0.*", code) && 0 == i) {
+                continue;
+            }
+
+
             boolean downResult = false;
+            StringBuilder url = new StringBuilder();
+
             url.append(host)
                     .append("?code=").append(i).append(code)
                     .append("&start=").append(startTime);
@@ -53,7 +61,8 @@ public class StockHisDataDownUtil {
                     return true;
                 } else {
                     file.delete();
-                    downFailLogger.info(url.toString());
+                    downFailLogger.error("文件下载失败: " + url.toString());
+                    continue;
                 }
             }
         }

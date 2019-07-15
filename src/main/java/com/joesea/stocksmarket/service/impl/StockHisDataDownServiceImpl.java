@@ -47,10 +47,12 @@ public class StockHisDataDownServiceImpl implements StockHisDataDownService {
                     BufferedReader reader = new BufferedReader(new FileReader(file));
                     reader.readLine();
                     String readLine;
-                    StockHisDataVo stockHisDataVo = null;
+
+                    stockHisDataDao.dropStockHisData(stockCode);
+                    stockHisDataDao.createStockHisData(stockCode);
                     while ((readLine = reader.readLine()) != null) {
                         String[] stockHisData = readLine.split(",");
-                        stockHisDataVo = new StockHisDataVo();
+                        StockHisDataVo stockHisDataVo = new StockHisDataVo();
                         stockHisDataVo.setId(UUID.randomUUID().toString().replaceAll("-", ""));
 
                         stockHisDataVo.setTransDate(stockHisData[0]);
@@ -62,20 +64,27 @@ public class StockHisDataDownServiceImpl implements StockHisDataDownService {
                         stockHisDataVo.setlClose(Double.valueOf(stockHisData[7]));//前收盘
                         stockHisDataVo.setChg(Double.valueOf(stockHisData[8].equals("None") ? "0" : stockHisData[8]));
                         stockHisDataVo.setPchg(Double.valueOf(stockHisData[9].equals("None") ? "0" : stockHisData[9]));
-                        stockHisDataVo.setTurnOver(Double.valueOf(stockHisData[10]));
+                        stockHisDataVo.setTurnOver(Double.valueOf(stockHisData[10].equals("None") ? "0" : stockHisData[10]));
                         stockHisDataVo.setVoTurnOver(stockHisData[11]);
                         stockHisDataVo.setVaTurnOver(stockHisData[12]);
                         stockHisDataVo.setTcap(stockHisData[13]);
                         stockHisDataVo.setMcap(stockHisData[14]);
+
+                        if (stockHisData[8].equals("None") || stockHisData[9].equals("None") || stockHisData[10].equals("None") || Double.valueOf(stockHisData[4])==Double.valueOf(stockHisData[5])){
+                            stockHisDataVo.setMarketFlag(0);
+                        } else {
+                            stockHisDataVo.setMarketFlag(1);
+                        }
+
                         stockHisDataDao.insertOrUpdateStockHisData(stockHisDataVo);
                     }
 
-                    if (null != stockHisDataVo) {
-                        StockVo stockVo = new StockVo();
-                        stockVo.setCode(stockHisDataVo.getStockCode());
-                        stockVo.setHisDataDownFlag(1);
-                        stockDao.updateHisDataDownFlag(stockVo);
-                    }
+                    StockVo stockVo = new StockVo();
+                    stockVo.setCode(stockCode);
+                    stockVo.setHisDataDownFlag(1);
+                    stockDao.updateHisDataDownFlag(stockVo);
+
+                    file.delete();
                 } catch (FileNotFoundException e) {
                     logger.error(localFilePath + "文件不存在", e);
                 } catch (IOException e) {
