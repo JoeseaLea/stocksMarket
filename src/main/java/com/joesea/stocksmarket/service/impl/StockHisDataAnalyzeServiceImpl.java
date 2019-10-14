@@ -20,7 +20,7 @@ public class StockHisDataAnalyzeServiceImpl implements StockHisDataAnalyzeServic
 
     @Override
     public void ma5Gtma10(StockHisDataVo stockHisDataVo) {
-        stockHisDataVo.setStockCode("000001");
+        stockHisDataVo.setStockCode("000009");
         stockHisDataVo.setMarketFlag(1);
         List<StockHisDataVo> stockHisDataList = stockHisDataDao.getStockHisData(stockHisDataVo);
 
@@ -61,14 +61,14 @@ public class StockHisDataAnalyzeServiceImpl implements StockHisDataAnalyzeServic
                 if (maxamout < 1000*buy) {
                     maxamout = 1000*buy;
                 }
-                System.out.println(stockHisDataList.get(i).getTransDate() + "买进");
+                System.out.println(stockHisDataList.get(i).getTransDate() + "买进" + buy);
             }
 
             if (!flag && stockHisDataList.get(i).gettClose() < stockHisDataList.get(i-1).gettClose() && num > 0) {
                 count -= stockHisDataList.get(i).gettClose() * num * 0.0003;
                 count += (stockHisDataList.get(i).gettClose()- buy) * num;
                 num = 0;
-                System.out.println(stockHisDataList.get(i).getTransDate() + "卖出sale");
+                System.out.println(stockHisDataList.get(i).getTransDate() + "卖出sale" + stockHisDataList.get(i).gettClose());
             }
 
             if (num > 0) {

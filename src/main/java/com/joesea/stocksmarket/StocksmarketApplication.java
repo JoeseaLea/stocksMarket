@@ -35,12 +35,12 @@ public class StocksmarketApplication implements CommandLineRunner {
 	public void run(String... args) {
 		init();
 
+		stockCodeAndNameDownService.downAllStockCodeAndName();
+		stockHisDataDownService.downAllStockHisData();
+		stockHisDataAnalyzeService.ma5Gtma10(new StockHisDataVo());
 	}
 
 	private void init() {
 		StockCurDataDownUtil.setHost(host);
-//		stockCodeAndNameDownService.downAllStockCodeAndName();
-//		stockHisDataDownService.downAllStockHisData();
-		stockHisDataAnalyzeService.ma5Gtma10(new StockHisDataVo());
 	}
 }

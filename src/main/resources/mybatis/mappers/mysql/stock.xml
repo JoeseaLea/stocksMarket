@@ -17,7 +17,14 @@
 		select `code` from `stock`
 	</select>
 	<select id="getAllNotDownHisDataStockCode" resultType="java.lang.String">
-		select `code` from `stock` where `his_data_down_flag` = 0
+		select `code` from `stock`
+		where `his_data_down_flag` = 0
+		and `code` not like '395%'
+		and `code` not like '399%'
+	</select>
+	<select id="getAllHaveDownHisDataStockCode" resultType="java.lang.String">
+		select `code` from `stock`
+		where `his_data_down_flag` = 1
 	</select>
 	<update id="updateHisDataDownFlag" parameterType="com.joesea.stocksmarket.vo.StockVo">
 		update `stock`

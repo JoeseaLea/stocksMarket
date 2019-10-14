@@ -11,7 +11,7 @@ create table stock_his_data(
   l_close decimal(8, 2) comment '前收盘价',
   chg decimal(8,2) comment '涨跌额',
   pchg decimal(12,6) comment '涨跌幅',
-  turn_over decimal(10,6) comment '换手率',
+  turn_over decimal(12,6) comment '换手率',
   vo_turn_over varchar(32) comment '成交量',
   va_turn_over varchar(32) comment '成交金额',
   tcap  varchar(32) comment '总市值',
