@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -33,6 +35,7 @@ public class AnalysisCSVThread implements Runnable {
 
     @Override
     public void run() {
+        Date lastHisDataDownDate = Calendar.getInstance().getTime();
         File file = new File(localFilePath);
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -72,7 +75,8 @@ public class AnalysisCSVThread implements Runnable {
 
             StockVo stockVo = new StockVo();
             stockVo.setCode(stockCode);
-            stockVo.setHisDataDownFlag(1);
+            stockVo.setLastHisDataDownFlag(1);
+            stockVo.setLastHisDataDownDate(lastHisDataDownDate);
             stockDao.updateHisDataDownFlag(stockVo);
 
             file.delete();

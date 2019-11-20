@@ -1,14 +1,17 @@
 package com.joesea.stocksmarket.uitl;
 
+import com.joesea.stocksmarket.EnvConfig;
+import com.joesea.stocksmarket.vo.StockVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
 /**
@@ -22,16 +25,14 @@ public class StockHisDataDownUtil {
     private static final Logger logger = LoggerFactory.getLogger(StockHisDataDownUtil.class);
     private static final Logger downFailLogger = LoggerFactory.getLogger("stockHisDataDownLoadFail");
 
-    private static String host;
-    private static String fields;
-    private static String startTime;
-    private static String endTime;
 
-    public static boolean downloadStockHisDataCsv(String code, String localFilePath){
+    public static boolean downloadStockHisDataCsv(StockVo stockVo, String localFilePath){
+        DateFormat df = new SimpleDateFormat("yyyyMMdd");
+        String startTime = df.format(stockVo.getLastHisDataDownDate());
 
         for (int i = 0; i < 10; i ++) {
 
-            if (Pattern.matches("^0.*", code) && 0 == i) {
+            if (Pattern.matches("^0.*", stockVo.getCode()) && 0 == i) {
                 continue;
             }
 
@@ -39,13 +40,10 @@ public class StockHisDataDownUtil {
             boolean downResult = false;
             StringBuilder url = new StringBuilder();
 
-            url.append(host)
-                    .append("?code=").append(i).append(code)
+            url.append(EnvConfig.STOCK_HIS_DATA_DOWN_URI)
+                    .append("?code=").append(i).append(stockVo.getCode())
                     .append("&start=").append(startTime);
-            if (!"default".equals(endTime)) {
-                url.append("&end=").append(endTime);
-            }
-            url.append("&fields=").append(fields);
+            url.append("&fields=").append(EnvConfig.FIELDS);
 
             try {
                 URL urlFile = new URL(url.toString());
@@ -125,23 +123,4 @@ public class StockHisDataDownUtil {
         return false;
     }
 
-    @Value(value = "${stock.hisdata.down.host:http://quotes.money.163.com/service/chddata.html}")
-    public void setHost(String host) {
-        StockHisDataDownUtil.host = host;
-    }
-
-    @Value(value = "${stock.hisdata.down.fields:TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP}")
-    public void setFields(String fields) {
-        StockHisDataDownUtil.fields = fields;
-    }
-
-    @Value(value = "${stock.hisdata.down.startTime:19900101}")
-    public void setStartTime(String startTime) {
-        StockHisDataDownUtil.startTime = startTime;
-    }
-
-    @Value(value = "${stock.hisdata.down.endTime:default}")
-    public void setEndTime(String endTime) {
-        StockHisDataDownUtil.endTime = endTime;
-    }
 }

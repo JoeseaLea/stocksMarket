@@ -1,5 +1,7 @@
 package com.joesea.stocksmarket.vo;
 
+import java.util.Date;
+
 /**
  * <p>@author : Joesea Lea</p>
  * <p>@date : 2019/7/1</p>
@@ -19,10 +21,14 @@ public class StockVo {
      */
     private String name;
     /**
+     * 历史数据最后下载日期
+     */
+    private Date lastHisDataDownDate;
+    /**
      * 历史数据下载标志
      * 0:未下载   1:已下载
      */
-    private int hisDataDownFlag;
+    private int lastHisDataDownFlag;
 
     public long getId() {
         return id;
@@ -48,11 +54,30 @@ public class StockVo {
         this.name = name;
     }
 
-    public int getHisDataDownFlag() {
-        return hisDataDownFlag;
+    public Date getLastHisDataDownDate() {
+        return lastHisDataDownDate;
     }
 
-    public void setHisDataDownFlag(int hisDataDownFlag) {
-        this.hisDataDownFlag = hisDataDownFlag;
+    public void setLastHisDataDownDate(Date lastHisDataDownDate) {
+        this.lastHisDataDownDate = lastHisDataDownDate;
+    }
+
+    public int getLastHisDataDownFlag() {
+        return lastHisDataDownFlag;
+    }
+
+    public void setLastHisDataDownFlag(int lastHisDataDownFlag) {
+        this.lastHisDataDownFlag = lastHisDataDownFlag;
+    }
+
+    @Override
+    public String toString() {
+        return "StockVo{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", lastHisDataDownDate=" + lastHisDataDownDate +
+                ", lastHisDataDownFlag=" + lastHisDataDownFlag +
+                '}';
     }
 }

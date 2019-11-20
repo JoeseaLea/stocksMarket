@@ -5,17 +5,37 @@
 	<sql id="common_sql">
 		t.id,
 		t.code,
-		t.name
+		t.name,
+		t.last_his_data_down_date,
+		t.last_his_data_down_flag
 	</sql>
+	<resultMap id="resultStockVoMap" type="com.joesea.stocksmarket.vo.StockVo">
+		<result property="id" column="id"/>
+		<result property="code" column="code"/>
+		<result property="name" column="name"/>
+		<result property="lastHisDataDownDate" column="last_his_data_down_date"/>
+		<result property="lastHisDataDownFlag" column="last_his_data_down_flag"/>
+	</resultMap>
 	<insert id="insertOrUpdateStock" parameterType="com.joesea.stocksmarket.vo.StockVo">
-		insert into `stock` (`code`, `name`)
+		insert into `stock` (`code`, `name`, `last_his_data_down_date`, `last_his_data_down_flag`)
 		values
-		(#{stock.code}, #{stock.name})
+		(#{stock.code}, #{stock.name}, #{stock.lastHisDataDownDate}, #{stock.lastHisDataDownFlag})
 		on duplicate key update `name` = #{stock.name}
 	</insert>
+	<select id="getAllStockVo" resultType="com.joesea.stocksmarket.vo.StockVo" resultMap="resultStockVoMap">
+		select `id`, `code`, `name`, `last_his_data_down_date`, `last_his_data_down_flag` from `stock`
+		where `code` not like '395%'
+		and `code` not like '399%'
+	</select>
 	<select id="getAllStockCode" resultType="java.lang.String">
 		select `code` from `stock`
 		where `code` not like '395%'
+		and `code` not like '399%'
+	</select>
+	<select id="getAllNotDownHisDataStockVo" resultType="com.joesea.stocksmarket.vo.StockVo" resultMap="resultStockVoMap">
+		select `id`, `code`, `name`, `last_his_data_down_date`, `last_his_data_down_flag` from `stock`
+		where `his_data_down_flag` = 0
+		and `code` not like '395%'
 		and `code` not like '399%'
 	</select>
 	<select id="getAllNotDownHisDataStockCode" resultType="java.lang.String">
@@ -30,7 +50,9 @@
 	</select>
 	<update id="updateHisDataDownFlag" parameterType="com.joesea.stocksmarket.vo.StockVo">
 		update `stock`
-		set his_data_down_flag = #{stock.hisDataDownFlag}
+		set his_data_down_flag = #{stock.hisDataDownFlag},
+			`last_his_data_down_flag` = #{stock.lastHisDataDownFlag},
+			`last_his_data_down_date` = #{stock.lastHisDataDownDate}
 		where code = #{stock.code}
 	</update>
 </mapper> 

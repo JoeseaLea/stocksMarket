@@ -7,10 +7,15 @@ import com.joesea.stocksmarket.vo.StockVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +30,8 @@ public class StockCodeAndNameDownServiceImpl implements StockCodeAndNameDownServ
 
     @Autowired
     private StockDao stockDao;
+
+    private static Date startTime = null;
 
     @Override
     public void downAllStockCodeAndName() {
@@ -105,9 +112,21 @@ public class StockCodeAndNameDownServiceImpl implements StockCodeAndNameDownServ
 
                 stock.setCode(stockCode);
                 stock.setName(stockName);
+                stock.setLastHisDataDownDate(StockCodeAndNameDownServiceImpl.startTime);
+                stock.setLastHisDataDownFlag(0);
 
                 stockDao.insertOrUpdateStock(stock);
             }
+        }
+    }
+
+    @Value(value = "${stock.hisdata.down.startTime:19900101}")
+    public void setStartTime(String startTime) {
+        DateFormat df = new SimpleDateFormat("yyyyMMdd");
+        try {
+            StockCodeAndNameDownServiceImpl.startTime = df.parse(startTime);
+        } catch (ParseException e) {
+            logger.error("日期格式话异常，格式化日期" + startTime, e);
         }
     }
 }

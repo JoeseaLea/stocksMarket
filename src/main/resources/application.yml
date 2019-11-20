@@ -28,7 +28,7 @@ stock.hisdata.down:
     #fields: TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP
     startTime: 19900101
     #endTime: 20190621
-    #localDir: stockHisData.xml
+    #localDir: stockHisDataCsv
 
 #logging.level.com.joesea.stocksmarket.dao: debug
 logging:

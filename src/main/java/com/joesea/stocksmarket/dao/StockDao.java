@@ -20,10 +20,22 @@ public interface StockDao {
     void insertOrUpdateStock(@Param(value = "stock") StockVo stock);
 
     /**
+     * 获取所有股票实体
+     * @return 所有股票实体
+     */
+    List<StockVo> getAllStockVo();
+
+    /**
      * 获取所有股票代码
      * @return 所有股票代码
      */
     List<String> getAllStockCode();
+
+    /**
+     * 获取所有未下载历史数据的股票实体
+     * @return 所有股票实体
+     */
+    List<StockVo> getAllNotDownHisDataStockVo();
 
     /**
      * 获取所有未下载历史数据的股票代码

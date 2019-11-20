@@ -1,12 +1,10 @@
 package com.joesea.stocksmarket.schedule;
 
 import com.joesea.stocksmarket.service.StockCodeAndNameDownService;
-import com.joesea.stocksmarket.uitl.StockCurDataDownUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 /**
  * <p>@author : Joesea Lea</p>
@@ -14,19 +12,14 @@ import javax.annotation.PostConstruct;
  * <p>@description : 下载股票代码</p>
  */
 @Component
+@EnableScheduling
 public class StockCodeAndNameDownSchedule {
 
     @Autowired
     private StockCodeAndNameDownService stockCodeAndNameDownService;
 
-    @Value("${stock.curdata.down.host}")
-    private String host;
-
-    @PostConstruct
+    @Scheduled(cron = "0 30 0 * * ?")
     public void stockCodeAndNameDown() {
-
-        StockCurDataDownUtil.setHost(host);
-
         stockCodeAndNameDownService.downAllStockCodeAndName();
     }
 }

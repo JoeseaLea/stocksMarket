@@ -1,5 +1,6 @@
 package com.joesea.stocksmarket.uitl;
 
+import com.joesea.stocksmarket.EnvConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -23,12 +24,6 @@ public class StockCurDataDownUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(StockCurDataDownUtil.class);
 
-    private static String host;
-
-    public static void setHost(String host) {
-        StockCurDataDownUtil.host = host;
-    }
-
     /**
      * 下载股票交易当前数据，默认返回结果编码为gbk
      * @param stockCodes 股票代码集合（股票代码数据不能带前缀"sh"或者"sz"）
@@ -51,7 +46,7 @@ public class StockCurDataDownUtil {
         if (sb.length() <= 0) {
             return null;
         }
-        String url = host + sb.toString().substring(0, sb.toString().length() - 1);
+        String url = EnvConfig.STOCK_CODE_NAME_DOWN_URI + sb.toString().substring(0, sb.toString().length() - 1);
 
         return curDataDown(url);
     }
