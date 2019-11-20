@@ -15,6 +15,8 @@
 	</insert>
 	<select id="getAllStockCode" resultType="java.lang.String">
 		select `code` from `stock`
+		where `code` not like '395%'
+		and `code` not like '399%'
 	</select>
 	<select id="getAllNotDownHisDataStockCode" resultType="java.lang.String">
 		select `code` from `stock`
