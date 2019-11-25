@@ -47,5 +47,11 @@ public interface StockDao {
      * 更新历史数据下载情况
      * @param stock 股票实体
      */
-    void updateHisDataDownFlag(@Param(value = "stock") StockVo stock);
+    void updateLastHisDataDownFlag(@Param(value = "stock") StockVo stock);
+
+    /**
+     * 重置历史数据下载标识
+     * 重置为未下载状态
+     */
+    void resetLastHisDataDownFlag();
 }

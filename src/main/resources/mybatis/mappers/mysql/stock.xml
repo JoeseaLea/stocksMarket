@@ -34,25 +34,28 @@
 	</select>
 	<select id="getAllNotDownHisDataStockVo" resultType="com.joesea.stocksmarket.vo.StockVo" resultMap="resultStockVoMap">
 		select `id`, `code`, `name`, `last_his_data_down_date`, `last_his_data_down_flag` from `stock`
-		where `his_data_down_flag` = 0
+		where `last_his_data_down_flag` = 0
 		and `code` not like '395%'
 		and `code` not like '399%'
 	</select>
 	<select id="getAllNotDownHisDataStockCode" resultType="java.lang.String">
 		select `code` from `stock`
-		where `his_data_down_flag` = 0
+		where `last_his_data_down_flag` = 0
 		and `code` not like '395%'
 		and `code` not like '399%'
 	</select>
 	<select id="getAllHaveDownHisDataStockCode" resultType="java.lang.String">
 		select `code` from `stock`
-		where `his_data_down_flag` = 1
+		where `last_his_data_down_flag` = 1
 	</select>
-	<update id="updateHisDataDownFlag" parameterType="com.joesea.stocksmarket.vo.StockVo">
+	<update id="updateLastHisDataDownFlag" parameterType="com.joesea.stocksmarket.vo.StockVo">
 		update `stock`
-		set his_data_down_flag = #{stock.hisDataDownFlag},
-			`last_his_data_down_flag` = #{stock.lastHisDataDownFlag},
+		set `last_his_data_down_flag` = #{stock.lastHisDataDownFlag},
 			`last_his_data_down_date` = #{stock.lastHisDataDownDate}
 		where code = #{stock.code}
+	</update>
+	<update id="resetLastHisDataDownFlag" parameterType="com.joesea.stocksmarket.vo.StockVo">
+		update `stock`
+		set last_his_data_down_flag = 0
 	</update>
 </mapper> 

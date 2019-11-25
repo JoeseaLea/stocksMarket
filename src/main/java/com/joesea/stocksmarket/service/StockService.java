@@ -12,4 +12,6 @@ import java.util.List;
 public interface StockService {
     void insertOrUpdateStock(StockVo stock);
     List<String> getAllStockCode();
+
+    void resetLastHisDataDownFlag();
 }

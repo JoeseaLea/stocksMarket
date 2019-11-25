@@ -12,4 +12,5 @@ public class EnvConfig {
     public static String START_TIME;                    //股票历史数据下载起始时间（不配置默认为19900101）
     public static String END_TIME;                      //股票历史数据下载结束时间（不配置默认为当前时间）
     public static String LOCAL_DIR;                     //股票历史数据下载csv文件保存路径（不配置默认当前目录下的stockHisData）
+    public static int MAX_QUEUE_TASK_SIZE = 5;          //股票历史数据下载解析csv文件最大线程数（不配置默认为5）
 }

@@ -28,4 +28,9 @@ public class StockServiceImpl implements StockService {
     public List<String> getAllStockCode() {
         return stockDao.getAllStockCode();
     }
+
+    @Override
+    public void resetLastHisDataDownFlag() {
+        stockDao.resetLastHisDataDownFlag();
+    }
 }

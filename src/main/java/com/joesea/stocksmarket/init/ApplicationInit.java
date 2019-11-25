@@ -3,6 +3,7 @@ package com.joesea.stocksmarket.init;
 import com.joesea.stocksmarket.EnvConfig;
 import com.joesea.stocksmarket.service.StockCodeAndNameDownService;
 import com.joesea.stocksmarket.service.StockHisDataDownService;
+import com.joesea.stocksmarket.thread.ThreadPoolExecutorManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,8 @@ public class ApplicationInit {
     public void init() {
         initParam();
 
+        ThreadPoolExecutorManager.createExecutorService();
+
         stockCodeAndNameDownService.downAllStockCodeAndName();
         stockHisDataDownService.downAllStockHisData();
     }
@@ -48,6 +51,8 @@ public class ApplicationInit {
                 StringUtils.isEmpty(this.END_TIME) ? df.format(Calendar.getInstance().getTime()) : this.END_TIME;
         EnvConfig.LOCAL_DIR =
                 StringUtils.isEmpty(this.LOCAL_DIR) ? "/Users/joesealea/IdeaProjects/stocksMarket/stockHisDataCsv" : this.LOCAL_DIR;
+        EnvConfig.MAX_QUEUE_TASK_SIZE =
+                StringUtils.isEmpty(this.MAX_QUEUE_TASK_SIZE) ? 5 : Integer.parseInt(this.MAX_QUEUE_TASK_SIZE);
     }
 
     @Value("${stock.curdata.down.host:http://hq.sinajs.cn/list=}")
@@ -62,5 +67,6 @@ public class ApplicationInit {
     private String END_TIME;                      //股票历史数据下载结束时间（不配置默认为当前时间）
     @Value(value = "${stock.hisdata.down.localDir:/Users/joesealea/IdeaProjects/stocksMarket/stockHisDataCsv}")
     private String LOCAL_DIR;                     //股票历史数据下载csv文件保存路径（不配置默认当前目录下的stockHisData）
-
+    @Value(value = "${stock.hisdata.down.maxQueueTaskSize:5}")
+    private String MAX_QUEUE_TASK_SIZE;           //股票历史数据下载解析csv文件最大线程数（不配置默认为5）
 }

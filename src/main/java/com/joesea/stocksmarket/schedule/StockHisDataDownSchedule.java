@@ -17,7 +17,7 @@ public class StockHisDataDownSchedule {
     @Autowired
     private StockHisDataDownService stockHisDataDownService;
 
-    @Scheduled(cron = "0 0 1 * * ?")
+    @Scheduled(cron = "0 30 15 * * ?")
     public void stockHisDataDown() {
         stockHisDataDownService.downAllStockHisData();
     }

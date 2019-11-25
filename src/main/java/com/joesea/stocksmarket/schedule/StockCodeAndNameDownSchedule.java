@@ -1,6 +1,7 @@
 package com.joesea.stocksmarket.schedule;
 
 import com.joesea.stocksmarket.service.StockCodeAndNameDownService;
+import com.joesea.stocksmarket.service.impl.StockServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,9 +18,16 @@ public class StockCodeAndNameDownSchedule {
 
     @Autowired
     private StockCodeAndNameDownService stockCodeAndNameDownService;
+    @Autowired
+    private StockServiceImpl stockService;
 
-    @Scheduled(cron = "0 30 0 * * ?")
+    @Scheduled(cron = "0 0 8 * * ?")
     public void stockCodeAndNameDown() {
         stockCodeAndNameDownService.downAllStockCodeAndName();
+    }
+
+    @Scheduled(cron = "0 0 9 * * ?")
+    public void stockCodeAndNameDownFlagUpdate() {
+        stockService.resetLastHisDataDownFlag();
     }
 }

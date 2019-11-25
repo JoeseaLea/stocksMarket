@@ -77,7 +77,7 @@ public class AnalysisCSVThread implements Runnable {
             stockVo.setCode(stockCode);
             stockVo.setLastHisDataDownFlag(1);
             stockVo.setLastHisDataDownDate(lastHisDataDownDate);
-            stockDao.updateHisDataDownFlag(stockVo);
+            stockDao.updateLastHisDataDownFlag(stockVo);
 
             file.delete();
         } catch (FileNotFoundException e) {

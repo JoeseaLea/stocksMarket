@@ -23,12 +23,14 @@ stock.curdata.down.host: http://hq.sinajs.cn/list=
 # startTime: 起始时间（不配置默认为19900101）
 # endTime: 结束时间（不配置默认为当前时间）
 # localDir: csv文件保存路径（不配置默认当前目录下的stockHisData）
+# maxQueueTaskSize: 解析csv文件最大线程数（不配置默认为5）
 stock.hisdata.down:
     host: http://quotes.money.163.com/service/chddata.html
     #fields: TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP
     startTime: 19900101
     #endTime: 20190621
     #localDir: stockHisDataCsv
+    maxQueueTaskSize: 3
 
 #logging.level.com.joesea.stocksmarket.dao: debug
 logging:
