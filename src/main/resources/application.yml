@@ -5,6 +5,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
+    druid:
+      initial-size: 10
+      min-idle: 10
+      max-active: 50
+      max-wait: 500
+    
 
 ﻿mybatis:
 #  # mybatis配置文件所在路径
@@ -29,7 +35,7 @@ stock.hisdata.down:
     #fields: TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP
     startTime: 19900101
     #endTime: 20190621
-    #localDir: stockHisDataCsv
+    localDir: /Users/joesealea/IdeaProjects/stocksMarket/stockHisDataCsv
     maxQueueTaskSize: 3
 
 #logging.level.com.joesea.stocksmarket.dao: debug

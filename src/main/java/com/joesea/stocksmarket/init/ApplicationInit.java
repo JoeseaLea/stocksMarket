@@ -50,7 +50,7 @@ public class ApplicationInit {
         EnvConfig.END_TIME =
                 StringUtils.isEmpty(this.END_TIME) ? df.format(Calendar.getInstance().getTime()) : this.END_TIME;
         EnvConfig.LOCAL_DIR =
-                StringUtils.isEmpty(this.LOCAL_DIR) ? "/Users/joesealea/IdeaProjects/stocksMarket/stockHisDataCsv" : this.LOCAL_DIR;
+                StringUtils.isEmpty(this.LOCAL_DIR) ? "stockHisDataCsv" : this.LOCAL_DIR;
         EnvConfig.MAX_QUEUE_TASK_SIZE =
                 StringUtils.isEmpty(this.MAX_QUEUE_TASK_SIZE) ? 5 : Integer.parseInt(this.MAX_QUEUE_TASK_SIZE);
     }
@@ -65,7 +65,7 @@ public class ApplicationInit {
     private String START_TIME;                    //股票历史数据下载起始时间（不配置默认为19900101）
     @Value("${stock.hisdata.down.endTime:}")
     private String END_TIME;                      //股票历史数据下载结束时间（不配置默认为当前时间）
-    @Value(value = "${stock.hisdata.down.localDir:/Users/joesealea/IdeaProjects/stocksMarket/stockHisDataCsv}")
+    @Value(value = "${stock.hisdata.down.localDir:stockHisDataCsv}")
     private String LOCAL_DIR;                     //股票历史数据下载csv文件保存路径（不配置默认当前目录下的stockHisData）
     @Value(value = "${stock.hisdata.down.maxQueueTaskSize:5}")
     private String MAX_QUEUE_TASK_SIZE;           //股票历史数据下载解析csv文件最大线程数（不配置默认为5）
