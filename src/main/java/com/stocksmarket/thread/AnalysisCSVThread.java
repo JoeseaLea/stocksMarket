@@ -2,6 +2,7 @@ package com.stocksmarket.thread;
 
 import com.stocksmarket.dao.StockDao;
 import com.stocksmarket.dao.StockHisDataDao;
+import com.stocksmarket.utils.SpringContextUtil;
 import com.stocksmarket.vo.StockHisDataVo;
 import com.stocksmarket.vo.StockVo;
 import org.slf4j.Logger;
@@ -23,18 +24,16 @@ public class AnalysisCSVThread implements Runnable {
 
     private String localFilePath;
     private String stockCode;
-    private StockHisDataDao stockHisDataDao;
-    private StockDao stockDao;
 
-    public AnalysisCSVThread(String localFilePath, String stockCode, StockHisDataDao stockHisDataDao, StockDao stockDao) {
-        this.localFilePath = localFilePath;
+    public AnalysisCSVThread(String stockCode, String localFilePath) {
         this.stockCode = stockCode;
-        this.stockHisDataDao = stockHisDataDao;
-        this.stockDao = stockDao;
+        this.localFilePath = localFilePath;
     }
 
     @Override
     public void run() {
+        StockHisDataDao stockHisDataDao = SpringContextUtil.getBean(StockHisDataDao.class);
+        StockDao stockDao = SpringContextUtil.getBean(StockDao.class);
         Date lastHisDataDownDate = Calendar.getInstance().getTime();
         File file = new File(localFilePath);
         try {

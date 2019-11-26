@@ -2,7 +2,6 @@ package com.stocksmarket.service.impl;
 
 import com.stocksmarket.EnvConfig;
 import com.stocksmarket.dao.StockDao;
-import com.stocksmarket.dao.StockHisDataDao;
 import com.stocksmarket.service.StockHisDataDownService;
 import com.stocksmarket.thread.AnalysisCSVThread;
 import com.stocksmarket.thread.ThreadPoolExecutorManager;
@@ -26,10 +25,8 @@ public class StockHisDataDownServiceImpl implements StockHisDataDownService {
 
     @Autowired
     private StockDao stockDao;
-    @Autowired
-    private StockHisDataDao stockHisDataDao;
 
-    private static final Logger logger = LoggerFactory.getLogger(StockHisDataDownServiceImpl.class);
+//    private static final Logger logger = LoggerFactory.getLogger(StockHisDataDownServiceImpl.class);
     private static final Logger downFailLogger = LoggerFactory.getLogger("stockHisDataDownLoadFail");
 
 
@@ -42,7 +39,7 @@ public class StockHisDataDownServiceImpl implements StockHisDataDownService {
             boolean downResult = StockHisDataDownUtil.downloadStockHisDataCsv(stockVo, localFilePath);
             /* 下载成功，解析csv文件*/
             if (downResult) {
-                ThreadPoolExecutorManager.execute(new AnalysisCSVThread(localFilePath, stockVo.getCode(), stockHisDataDao, stockDao));
+                ThreadPoolExecutorManager.execute(new AnalysisCSVThread(localFilePath, stockVo.getCode()));
             } else {
                 downFailLogger.info("股票历史数据csv文件下载失败:" + stockVo.getCode());
             }
