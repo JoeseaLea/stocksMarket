@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.joesea.stocksmarket.dao.StockHisDataDao">
+<mapper namespace="com.stocksmarket.dao.StockHisDataDao">
     <sql id="common_sql">
 		`id` as id,
         `trans_date` as transDate,
@@ -26,7 +26,7 @@
     <update id="createStockHisData" parameterType="java.lang.String">
         create table stock_his_data_${stockCode} like stock_his_data;
     </update>
-    <insert id="insertOrUpdateStockHisData" parameterType="com.joesea.stocksmarket.vo.StockHisDataVo">
+    <insert id="insertOrUpdateStockHisData" parameterType="com.stocksmarket.vo.StockHisDataVo">
         INSERT INTO stock_his_data_${stockHisData.stockCode}
         (
             `id`,
@@ -81,8 +81,8 @@
             `market_flag`=#{stockHisData.marketFlag};
 	</insert>
 
-    <select id="getStockHisData" parameterType="com.joesea.stocksmarket.vo.StockHisDataVo"
-            resultType="com.joesea.stocksmarket.vo.StockHisDataVo">
+    <select id="getStockHisData" parameterType="com.stocksmarket.vo.StockHisDataVo"
+            resultType="com.stocksmarket.vo.StockHisDataVo">
         select
         <include refid="common_sql"></include>
         from stock_his_data_${stockHisData.stockCode}

@@ -36,9 +36,9 @@ stock.hisdata.down:
     startTime: 19900101
     #endTime: 20190621
     localDir: /Users/joesealea/IdeaProjects/stocksMarket/stockHisDataCsv
-    maxQueueTaskSize: 3
+    maxQueueTaskSize: 5
 
-#logging.level.com.joesea.stocksmarket.dao: debug
+#logging.level.com.stocksmarket.dao: debug
 logging:
   config: classpath:logback.xml
   level:

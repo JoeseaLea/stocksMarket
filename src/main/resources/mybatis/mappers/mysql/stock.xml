@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.joesea.stocksmarket.dao.StockDao">
+<mapper namespace="com.stocksmarket.dao.StockDao">
 	<sql id="common_sql">
 		t.id,
 		t.code,
@@ -9,20 +9,20 @@
 		t.last_his_data_down_date,
 		t.last_his_data_down_flag
 	</sql>
-	<resultMap id="resultStockVoMap" type="com.joesea.stocksmarket.vo.StockVo">
+	<resultMap id="resultStockVoMap" type="com.stocksmarket.vo.StockVo">
 		<result property="id" column="id"/>
 		<result property="code" column="code"/>
 		<result property="name" column="name"/>
 		<result property="lastHisDataDownDate" column="last_his_data_down_date"/>
 		<result property="lastHisDataDownFlag" column="last_his_data_down_flag"/>
 	</resultMap>
-	<insert id="insertOrUpdateStock" parameterType="com.joesea.stocksmarket.vo.StockVo">
+	<insert id="insertOrUpdateStock" parameterType="com.stocksmarket.vo.StockVo">
 		insert into `stock` (`code`, `name`, `last_his_data_down_date`, `last_his_data_down_flag`)
 		values
 		(#{stock.code}, #{stock.name}, #{stock.lastHisDataDownDate}, #{stock.lastHisDataDownFlag})
 		on duplicate key update `name` = #{stock.name}
 	</insert>
-	<select id="getAllStockVo" resultType="com.joesea.stocksmarket.vo.StockVo" resultMap="resultStockVoMap">
+	<select id="getAllStockVo" resultType="com.stocksmarket.vo.StockVo" resultMap="resultStockVoMap">
 		select `id`, `code`, `name`, `last_his_data_down_date`, `last_his_data_down_flag` from `stock`
 		where `code` not like '395%'
 		and `code` not like '399%'
@@ -32,7 +32,7 @@
 		where `code` not like '395%'
 		and `code` not like '399%'
 	</select>
-	<select id="getAllNotDownHisDataStockVo" resultType="com.joesea.stocksmarket.vo.StockVo" resultMap="resultStockVoMap">
+	<select id="getAllNotDownHisDataStockVo" resultType="com.stocksmarket.vo.StockVo" resultMap="resultStockVoMap">
 		select `id`, `code`, `name`, `last_his_data_down_date`, `last_his_data_down_flag` from `stock`
 		where `last_his_data_down_flag` = 0
 		and `code` not like '395%'
@@ -48,13 +48,13 @@
 		select `code` from `stock`
 		where `last_his_data_down_flag` = 1
 	</select>
-	<update id="updateLastHisDataDownFlag" parameterType="com.joesea.stocksmarket.vo.StockVo">
+	<update id="updateLastHisDataDownFlag" parameterType="com.stocksmarket.vo.StockVo">
 		update `stock`
 		set `last_his_data_down_flag` = #{stock.lastHisDataDownFlag},
 			`last_his_data_down_date` = #{stock.lastHisDataDownDate}
 		where code = #{stock.code}
 	</update>
-	<update id="resetLastHisDataDownFlag" parameterType="com.joesea.stocksmarket.vo.StockVo">
+	<update id="resetLastHisDataDownFlag" parameterType="com.stocksmarket.vo.StockVo">
 		update `stock`
 		set last_his_data_down_flag = 0
 	</update>
