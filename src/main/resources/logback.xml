@@ -2,7 +2,7 @@
 <configuration scan="false" scanPeriod="100 seconds" debug="false">
 
     <property name="log.dir" value="logs" />
-    <property name="logger.level" value="debug" />
+    <property name="logger.level" value="info" />
 
     <!--控制台日志输出设置-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
