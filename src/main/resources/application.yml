@@ -10,7 +10,6 @@ spring:
       min-idle: 10
       max-active: 50
       max-wait: 500
-    
 
 ﻿mybatis:
 #  # mybatis配置文件所在路径

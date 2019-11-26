@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.PostConstruct;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,15 +20,14 @@ import java.util.Calendar;
  */
 @Component
 public class ApplicationInit {
+
     @Autowired
     private StockCodeAndNameDownService stockCodeAndNameDownService;
     @Autowired
     private StockHisDataDownService stockHisDataDownService;
 
-    @PostConstruct
     public void init() {
         initParam();
-
         ThreadPoolExecutorManager.createExecutorService();
 
         stockCodeAndNameDownService.downAllStockCodeAndName();

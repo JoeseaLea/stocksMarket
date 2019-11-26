@@ -32,14 +32,14 @@ public class StockHisDataDownServiceImpl implements StockHisDataDownService {
 
     @Override
     public void downAllStockHisData() {
-        List<StockVo> stockVos =  stockDao.getAllStockVo();
+        List<StockVo> stockVos =  stockDao.getAllNotDownHisDataStockVo();
 
         for (StockVo stockVo : stockVos) {
             String localFilePath = EnvConfig.LOCAL_DIR + File.separator + stockVo.getCode() + ".csv";
             boolean downResult = StockHisDataDownUtil.downloadStockHisDataCsv(stockVo, localFilePath);
             /* 下载成功，解析csv文件*/
             if (downResult) {
-                ThreadPoolExecutorManager.execute(new AnalysisCSVThread(localFilePath, stockVo.getCode()));
+                ThreadPoolExecutorManager.execute(new AnalysisCSVThread(stockVo.getCode(), localFilePath));
             } else {
                 downFailLogger.info("股票历史数据csv文件下载失败:" + stockVo.getCode());
             }
