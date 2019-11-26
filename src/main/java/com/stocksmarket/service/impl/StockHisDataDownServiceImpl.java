@@ -6,7 +6,7 @@ import com.stocksmarket.dao.StockHisDataDao;
 import com.stocksmarket.service.StockHisDataDownService;
 import com.stocksmarket.thread.AnalysisCSVThread;
 import com.stocksmarket.thread.ThreadPoolExecutorManager;
-import com.stocksmarket.uitl.StockHisDataDownUtil;
+import com.stocksmarket.utils.StockHisDataDownUtil;
 import com.stocksmarket.vo.StockVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

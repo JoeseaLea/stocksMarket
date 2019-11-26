@@ -1,4 +1,4 @@
-package com.stocksmarket.uitl;
+package com.stocksmarket.utils;
 
 import com.stocksmarket.EnvConfig;
 import org.slf4j.Logger;

@@ -2,7 +2,7 @@ package com.stocksmarket.service.impl;
 
 import com.stocksmarket.dao.StockDao;
 import com.stocksmarket.service.StockCodeAndNameDownService;
-import com.stocksmarket.uitl.StockCurDataDownUtil;
+import com.stocksmarket.utils.StockCurDataDownUtil;
 import com.stocksmarket.vo.StockVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
