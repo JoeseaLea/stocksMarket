@@ -2,12 +2,14 @@ package com.stocksmarket.service.impl;
 
 import com.stocksmarket.EnvConfig;
 import com.stocksmarket.service.StockHisDataDownService;
+import com.stocksmarket.service.StockService;
 import com.stocksmarket.thread.AnalysisCSVThread;
 import com.stocksmarket.thread.ThreadPoolExecutorManager;
 import com.stocksmarket.utils.StockHisDataDownUtil;
 import com.stocksmarket.vo.StockVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -25,6 +27,13 @@ public class StockHisDataDownServiceImpl implements StockHisDataDownService {
 //    private static final Logger logger = LoggerFactory.getLogger(StockHisDataDownServiceImpl.class);
     private static final Logger downFailLogger = LoggerFactory.getLogger("stockHisDataDownLoadFail");
 
+    @Autowired
+    private StockService stockService;
+    @Override
+    public void downAllStockHisData() {
+        List<StockVo> stockVos = stockService.getAllNotDownHisDataStockVo();
+        downAllStockHisData(stockVos);
+    }
 
     @Override
     public void downAllStockHisData(List<StockVo> stockVos) {
@@ -39,6 +48,12 @@ public class StockHisDataDownServiceImpl implements StockHisDataDownService {
             }
 
         }
+    }
+
+    @Override
+    public void downAllStockHisDataCsv() {
+        List<StockVo> stockVos = stockService.getAllNotDownHisDataStockVo();
+        downAllStockHisDataCsv(stockVos);
     }
 
     @Override

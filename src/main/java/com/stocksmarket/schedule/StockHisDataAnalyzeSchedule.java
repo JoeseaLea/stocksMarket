@@ -7,7 +7,6 @@ import com.stocksmarket.thread.ThreadPoolExecutorManager;
 import com.stocksmarket.vo.StockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class StockHisDataAnalyzeSchedule {
     @Autowired
     private StockService stockService;
 
-    @Scheduled(cron = "0/5 * * * * ?")
+//    @Scheduled(cron = "0/5 * * * * ?")
     public void ma5Gtma10() {
         List<StockVo> stockVos = stockService.getAllDownHisDataStockVo();
         for (StockVo stockVo: stockVos) {

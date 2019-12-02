@@ -26,12 +26,13 @@ public class ApplicationInit {
     @Autowired
     private StockHisDataDownService stockHisDataDownService;
 
+
     public void init() {
         initParam();
         ThreadPoolExecutorManager.createExecutorService();
 
         stockCodeAndNameDownService.downAllStockCodeAndName();
-//        stockHisDataDownService.downAllStockHisData();
+        stockHisDataDownService.downAllStockHisData();
     }
 
     private void initParam() {
