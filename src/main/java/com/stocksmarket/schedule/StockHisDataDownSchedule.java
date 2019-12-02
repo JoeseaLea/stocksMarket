@@ -1,7 +1,6 @@
 package com.stocksmarket.schedule;
 
 import com.stocksmarket.service.StockHisDataDownService;
-import com.stocksmarket.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,8 +16,6 @@ import org.springframework.stereotype.Component;
 public class StockHisDataDownSchedule {
     @Autowired
     private StockHisDataDownService stockHisDataDownService;
-    @Autowired
-    private StockService stockService;
 
     @Scheduled(cron = "0 30 15 * * ?")
     public void stockHisDataDown() {
