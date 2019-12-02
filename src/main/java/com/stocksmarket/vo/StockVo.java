@@ -21,6 +21,10 @@ public class StockVo {
      */
     private String name;
     /**
+     * 历史数据保存表名称
+     */
+    private String hisDataTableName;
+    /**
      * 历史数据最后下载日期
      */
     private Date lastHisDataDownDate;
@@ -29,14 +33,6 @@ public class StockVo {
      * 0:未下载   1:已下载
      */
     private int lastHisDataDownFlag;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getCode() {
         return code;
@@ -52,6 +48,14 @@ public class StockVo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getHisDataTableName() {
+        return hisDataTableName;
+    }
+
+    public void setHisDataTableName(String hisDataTableName) {
+        this.hisDataTableName = hisDataTableName;
     }
 
     public Date getLastHisDataDownDate() {
@@ -76,6 +80,7 @@ public class StockVo {
                 "id=" + id +
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
+                ", hisDataTableName='" + hisDataTableName + '\'' +
                 ", lastHisDataDownDate=" + lastHisDataDownDate +
                 ", lastHisDataDownFlag=" + lastHisDataDownFlag +
                 '}';

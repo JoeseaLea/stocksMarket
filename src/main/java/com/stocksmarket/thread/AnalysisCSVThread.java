@@ -34,6 +34,9 @@ public class AnalysisCSVThread implements Runnable {
     public void run() {
         StockHisDataDao stockHisDataDao = SpringContextUtil.getBean(StockHisDataDao.class);
         StockDao stockDao = SpringContextUtil.getBean(StockDao.class);
+
+        String hisDataTableName = stockDao.getHisDataTableName(stockCode);
+
         Date lastHisDataDownDate = Calendar.getInstance().getTime();
         File file = new File(localFilePath);
         try {
@@ -41,8 +44,6 @@ public class AnalysisCSVThread implements Runnable {
             reader.readLine();
             String readLine;
 
-            stockHisDataDao.dropStockHisData(stockCode);
-            stockHisDataDao.createStockHisData(stockCode);
             while ((readLine = reader.readLine()) != null) {
                 String[] stockHisData = readLine.split(",");
                 StockHisDataVo stockHisDataVo = new StockHisDataVo();
@@ -68,6 +69,8 @@ public class AnalysisCSVThread implements Runnable {
                 } else {
                     stockHisDataVo.setMarketFlag(1);
                 }
+
+                stockHisDataVo.setHisDataTableName(hisDataTableName);
 
                 stockHisDataDao.insertOrUpdateStockHisData(stockHisDataVo);
             }

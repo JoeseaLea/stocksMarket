@@ -1,7 +1,6 @@
 package com.stocksmarket.service.impl;
 
 import com.stocksmarket.EnvConfig;
-import com.stocksmarket.dao.StockDao;
 import com.stocksmarket.service.StockHisDataDownService;
 import com.stocksmarket.thread.AnalysisCSVThread;
 import com.stocksmarket.thread.ThreadPoolExecutorManager;
@@ -9,7 +8,6 @@ import com.stocksmarket.utils.StockHisDataDownUtil;
 import com.stocksmarket.vo.StockVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -23,17 +21,13 @@ import java.util.List;
 @Service
 public class StockHisDataDownServiceImpl implements StockHisDataDownService {
 
-    @Autowired
-    private StockDao stockDao;
 
 //    private static final Logger logger = LoggerFactory.getLogger(StockHisDataDownServiceImpl.class);
     private static final Logger downFailLogger = LoggerFactory.getLogger("stockHisDataDownLoadFail");
 
 
     @Override
-    public void downAllStockHisData() {
-        List<StockVo> stockVos =  stockDao.getAllNotDownHisDataStockVo();
-
+    public void downAllStockHisData(List<StockVo> stockVos) {
         for (StockVo stockVo : stockVos) {
             String localFilePath = EnvConfig.LOCAL_DIR + File.separator + stockVo.getCode() + ".csv";
             boolean downResult = StockHisDataDownUtil.downloadStockHisDataCsv(stockVo, localFilePath);
@@ -48,8 +42,7 @@ public class StockHisDataDownServiceImpl implements StockHisDataDownService {
     }
 
     @Override
-    public void downAllStockHisDataCsv() {
-        List<StockVo> stockVos = stockDao.getAllNotDownHisDataStockVo();
+    public void downAllStockHisDataCsv(List<StockVo> stockVos) {
         for (StockVo stockVo : stockVos) {
             boolean downResult = StockHisDataDownUtil.downloadStockHisDataCsv(stockVo, EnvConfig.LOCAL_DIR + File.separator + stockVo.getCode() + ".csv");
             if (!downResult) {

@@ -71,6 +71,11 @@ public class StockHisDataVo {
      */
     private int marketFlag;
 
+    /**
+     * 历史数据保存表名称
+     */
+    private String hisDataTableName;
+
     public String getId() {
         return id;
     }
@@ -199,6 +204,14 @@ public class StockHisDataVo {
         this.marketFlag = marketFlag;
     }
 
+    public String getHisDataTableName() {
+        return hisDataTableName;
+    }
+
+    public void setHisDataTableName(String hisDataTableName) {
+        this.hisDataTableName = hisDataTableName;
+    }
+
     @Override
     public String toString() {
         return "StockHisDataVo{" +
@@ -218,6 +231,7 @@ public class StockHisDataVo {
                 ", tcap='" + tcap + '\'' +
                 ", mcap='" + mcap + '\'' +
                 ", marketFlag=" + marketFlag +
+                ", hisDataTableName='" + hisDataTableName + '\'' +
                 '}';
     }
 }

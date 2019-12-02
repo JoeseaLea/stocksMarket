@@ -31,7 +31,7 @@ public class ApplicationInit {
         ThreadPoolExecutorManager.createExecutorService();
 
         stockCodeAndNameDownService.downAllStockCodeAndName();
-        stockHisDataDownService.downAllStockHisData();
+//        stockHisDataDownService.downAllStockHisData();
     }
 
     private void initParam() {

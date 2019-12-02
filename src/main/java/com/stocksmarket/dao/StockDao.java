@@ -54,4 +54,29 @@ public interface StockDao {
      * 重置为未下载状态
      */
     void resetLastHisDataDownFlag();
+
+    /**
+     * 获取所有已下载历史数据的股票代码
+     * @return 所有已下载历史数据的股票代码
+     */
+    List<StockVo> getAllDownHisDataStockVo();
+
+    /**
+     * 获取股票历史数据存储表名称
+     * @return 股票历史数据存储表名称
+     */
+    String getHisDataTableName(String code);
+
+    /**
+     * 获取最后记录的股票历史数据保存的表名称
+     * @return
+     */
+    String getLastHisDataTableName();
+
+    /**
+     * 获取指定历史数据保存表中记录的股票历史数据数量（保存了多少支股票的历史数据）
+     * @param hisDataTableName
+     * @return
+     */
+    int countHisDataTableName(String hisDataTableName);
 }

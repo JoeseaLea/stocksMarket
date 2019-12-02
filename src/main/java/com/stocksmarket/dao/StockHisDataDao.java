@@ -15,14 +15,14 @@ import java.util.List;
 public interface StockHisDataDao {
     /**
      * 删除股票历史数据表(指定股票代码为后缀)
-     * @param stockCode
+     * @param hisDataTableName
      */
-    void dropStockHisData(@Param(value = "stockCode") String stockCode);
+    void dropStockHisDataTable(@Param(value = "hisDataTableName") String hisDataTableName);
     /**
      * 创建股票历史数据表(指定股票代码为后缀)
-     * @param stockCode
+     * @param hisDataTableName
      */
-    void createStockHisData(@Param(value = "stockCode") String stockCode);
+    void createStockHisDataTable(@Param(value = "hisDataTableName") String hisDataTableName);
     /**
      * 插入或更新股票历史数据
      * @param stockHisDataVo

@@ -6,6 +6,7 @@
 		t.id,
 		t.code,
 		t.name,
+		t.his_data_table_name
 		t.last_his_data_down_date,
 		t.last_his_data_down_flag
 	</sql>
@@ -13,13 +14,14 @@
 		<result property="id" column="id"/>
 		<result property="code" column="code"/>
 		<result property="name" column="name"/>
+		<result property="his_data_table_name" column="hisDataTableName"/>
 		<result property="lastHisDataDownDate" column="last_his_data_down_date"/>
 		<result property="lastHisDataDownFlag" column="last_his_data_down_flag"/>
 	</resultMap>
 	<insert id="insertOrUpdateStock" parameterType="com.stocksmarket.vo.StockVo">
-		insert into `stock` (`code`, `name`, `last_his_data_down_date`, `last_his_data_down_flag`)
+		insert into `stock` (`code`, `name`, `his_data_table_name`, `last_his_data_down_date`, `last_his_data_down_flag`)
 		values
-		(#{stock.code}, #{stock.name}, #{stock.lastHisDataDownDate}, #{stock.lastHisDataDownFlag})
+		(#{stock.code}, #{stock.name}, #{stock.hisDataTableName}, #{stock.lastHisDataDownDate}, #{stock.lastHisDataDownFlag})
 		on duplicate key update `name` = #{stock.name}
 	</insert>
 	<select id="getAllStockVo" resultType="com.stocksmarket.vo.StockVo" resultMap="resultStockVoMap">
@@ -37,6 +39,15 @@
 		where `last_his_data_down_flag` = 0
 		and `code` not like '395%'
 		and `code` not like '399%'
+	</select>
+	<select id="getAllDownHisDataStockVo" resultType="com.stocksmarket.vo.StockVo" resultMap="resultStockVoMap">
+		select `id`, `code`, `name`, `last_his_data_down_date`, `last_his_data_down_flag` from `stock`
+		where `last_his_data_down_flag` = 1
+		and `code` not like '395%'
+		and `code` not like '399%'
+	</select>
+	<select id="getHisDataTableName" parameterType="java.lang.String" resultType="String">
+		select his_data_table_name from stock where `code` = #{code}
 	</select>
 	<select id="getAllNotDownHisDataStockCode" resultType="java.lang.String">
 		select `code` from `stock`
@@ -58,4 +69,10 @@
 		update `stock`
 		set last_his_data_down_flag = 0
 	</update>
+	<select id="getLastHisDataTableName" resultType="String">
+    	select his_data_table_name from stock where id = (select max(id) from stock)
+  	</select>
+	<select id="countHisDataTableName" parameterType="java.lang.String" resultType="Integer">
+    	select count(1) from stock where his_data_table_name=#{hisDataTableName}
+  	</select>
 </mapper> 

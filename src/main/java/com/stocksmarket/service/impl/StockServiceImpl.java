@@ -33,4 +33,14 @@ public class StockServiceImpl implements StockService {
     public void resetLastHisDataDownFlag() {
         stockDao.resetLastHisDataDownFlag();
     }
+
+    @Override
+    public List<StockVo> getAllNotDownHisDataStockVo() {
+        return stockDao.getAllNotDownHisDataStockVo();
+    }
+
+    @Override
+    public List<StockVo> getAllDownHisDataStockVo() {
+        return stockDao.getAllDownHisDataStockVo();
+    }
 }

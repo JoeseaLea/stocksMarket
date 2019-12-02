@@ -1,5 +1,6 @@
 package com.stocksmarket.service.impl;
 
+import com.stocksmarket.dao.StockDao;
 import com.stocksmarket.dao.StockHisDataDao;
 import com.stocksmarket.service.StockHisDataAnalyzeService;
 import com.stocksmarket.vo.StockHisDataVo;
@@ -17,10 +18,17 @@ import java.util.List;
 public class StockHisDataAnalyzeServiceImpl implements StockHisDataAnalyzeService {
     @Autowired
     private StockHisDataDao stockHisDataDao;
+    @Autowired
+    private StockDao stockDao;
 
     @Override
-    public void ma5Gtma10(StockHisDataVo stockHisDataVo) {
-        stockHisDataVo.setStockCode("000009");
+    public void ma5Gtma10(String code) {
+
+        String hisDataTableName = stockDao.getHisDataTableName(code);
+
+        StockHisDataVo stockHisDataVo = new StockHisDataVo();
+        stockHisDataVo.setHisDataTableName(hisDataTableName);
+        stockHisDataVo.setStockCode(code);
         stockHisDataVo.setMarketFlag(1);
         List<StockHisDataVo> stockHisDataList = stockHisDataDao.getStockHisData(stockHisDataVo);
 

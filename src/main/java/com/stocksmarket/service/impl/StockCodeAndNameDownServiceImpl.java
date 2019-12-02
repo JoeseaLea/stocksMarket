@@ -1,6 +1,7 @@
 package com.stocksmarket.service.impl;
 
 import com.stocksmarket.dao.StockDao;
+import com.stocksmarket.dao.StockHisDataDao;
 import com.stocksmarket.service.StockCodeAndNameDownService;
 import com.stocksmarket.utils.StockCurDataDownUtil;
 import com.stocksmarket.vo.StockVo;
@@ -17,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <p>@author : Joesea Lea</p>
@@ -30,6 +32,8 @@ public class StockCodeAndNameDownServiceImpl implements StockCodeAndNameDownServ
 
     @Autowired
     private StockDao stockDao;
+    @Autowired
+    private StockHisDataDao stockHisDataDao;
 
     private static Date startTime = null;
 
@@ -112,6 +116,7 @@ public class StockCodeAndNameDownServiceImpl implements StockCodeAndNameDownServ
 
                 stock.setCode(stockCode);
                 stock.setName(stockName);
+                stock.setHisDataTableName(getHisDataTableName(stockCode));
                 stock.setLastHisDataDownDate(StockCodeAndNameDownServiceImpl.startTime);
                 stock.setLastHisDataDownFlag(0);
 
@@ -128,5 +133,22 @@ public class StockCodeAndNameDownServiceImpl implements StockCodeAndNameDownServ
         } catch (ParseException e) {
             logger.error("日期格式话异常，格式化日期" + startTime, e);
         }
+    }
+
+    private String getHisDataTableName(String stockCode) {
+        String hisDataTableName = stockDao.getHisDataTableName(stockCode);
+        if (StringUtils.isEmpty(hisDataTableName)) {
+            hisDataTableName = stockDao.getLastHisDataTableName();
+
+            int count = stockDao.countHisDataTableName(hisDataTableName);
+
+            if (StringUtils.isEmpty(hisDataTableName) || count >= 100) {
+                hisDataTableName = "stock_his_data_" + UUID.randomUUID().toString().replace("-", "");
+                stockHisDataDao.dropStockHisDataTable(hisDataTableName);
+                stockHisDataDao.createStockHisDataTable(hisDataTableName);
+            }
+        }
+
+        return hisDataTableName;
     }
 }
