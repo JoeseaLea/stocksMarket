@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>@author : Joesea Lea</p>
@@ -28,10 +29,11 @@ public interface StockHisDataDao {
      * @param stockHisDataVo
      */
     void insertOrUpdateStockHisData(@Param(value = "stockHisData") StockHisDataVo stockHisDataVo);
+
     /**
      * 获取股票历史交易数据
-     * @param stockHisDataVo
+     * @param param 插叙参数：stockCode(String)、startIndex(int)、size(int)
      * @return 股票历史交易数据
      */
-    List<StockHisDataVo> getStockHisData(@Param(value = "stockHisData") StockHisDataVo stockHisDataVo);
+    List<StockHisDataVo> getStockHisData(Map<String,Object> param);
 }

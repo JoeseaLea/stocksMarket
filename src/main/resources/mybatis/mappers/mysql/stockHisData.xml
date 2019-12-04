@@ -81,17 +81,17 @@
             `market_flag`=#{stockHisData.marketFlag};
 	</insert>
 
-    <select id="getStockHisData" parameterType="com.stocksmarket.vo.StockHisDataVo"
-            resultType="com.stocksmarket.vo.StockHisDataVo">
+    <select id="getStockHisData" parameterType="java.util.Map" resultType="com.stocksmarket.vo.StockHisDataVo">
         select
         <include refid="common_sql"></include>
-        from ${stockHisData.hisDataTableName}
+        from ${hisDataTableName}
         <where>
-            1=1
-            <if test="null != stockHisData.marketFlag">
-                and `market_flag`=#{stockHisData.marketFlag}
+            `stock_code`=#{stockCode}
+            <if test="null != marketFlag">
+                and `market_flag`=#{marketFlag}
             </if>
         </where>
-        order by `trans_date` asc;
+        order by `trans_date` desc
+        limit #{startIndex}, #{size};
     </select>
 </mapper>

@@ -3,18 +3,18 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.stocksmarket.dao.StockDao">
 	<sql id="common_sql">
-		t.id,
-		t.code,
-		t.name,
-		t.his_data_table_name
-		t.last_his_data_down_date,
-		t.last_his_data_down_flag
+		`id`,
+		`code`,
+		`name`,
+		`his_data_table_name`,
+		`last_his_data_down_date`,
+		`last_his_data_down_flag`
 	</sql>
 	<resultMap id="resultStockVoMap" type="com.stocksmarket.vo.StockVo">
 		<result property="id" column="id"/>
 		<result property="code" column="code"/>
 		<result property="name" column="name"/>
-		<result property="his_data_table_name" column="hisDataTableName"/>
+		<result property="hisDataTableName" column="his_data_table_name"/>
 		<result property="lastHisDataDownDate" column="last_his_data_down_date"/>
 		<result property="lastHisDataDownFlag" column="last_his_data_down_flag"/>
 	</resultMap>
@@ -25,7 +25,9 @@
 		on duplicate key update `name` = #{stock.name}
 	</insert>
 	<select id="getAllStockVo" resultType="com.stocksmarket.vo.StockVo" resultMap="resultStockVoMap">
-		select `id`, `code`, `name`, `last_his_data_down_date`, `last_his_data_down_flag` from `stock`
+		select
+		<include refid="common_sql"></include>
+		from `stock`
 		where `code` not like '395%'
 		and `code` not like '399%'
 	</select>
@@ -35,13 +37,17 @@
 		and `code` not like '399%'
 	</select>
 	<select id="getAllNotDownHisDataStockVo" resultType="com.stocksmarket.vo.StockVo" resultMap="resultStockVoMap">
-		select `id`, `code`, `name`, `last_his_data_down_date`, `last_his_data_down_flag` from `stock`
+		select
+		<include refid="common_sql"></include>
+		from `stock`
 		where `last_his_data_down_flag` = 0
 		and `code` not like '395%'
 		and `code` not like '399%'
 	</select>
 	<select id="getAllDownHisDataStockVo" resultType="com.stocksmarket.vo.StockVo" resultMap="resultStockVoMap">
-		select `id`, `code`, `name`, `last_his_data_down_date`, `last_his_data_down_flag` from `stock`
+		select
+		<include refid="common_sql"></include>
+		from `stock`
 		where `last_his_data_down_flag` = 1
 		and `code` not like '395%'
 		and `code` not like '399%'

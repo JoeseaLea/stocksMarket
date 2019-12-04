@@ -1,12 +1,12 @@
 package com.stocksmarket.schedule;
 
-import com.stocksmarket.service.StockHisDataAnalyzeService;
 import com.stocksmarket.service.StockService;
-import com.stocksmarket.thread.Ma5GtMa10Thread;
+import com.stocksmarket.thread.MaNGtMaKThread;
 import com.stocksmarket.thread.ThreadPoolExecutorManager;
 import com.stocksmarket.vo.StockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,17 +19,15 @@ import java.util.List;
 @Component
 @EnableScheduling
 public class StockHisDataAnalyzeSchedule {
-    @Autowired
-    private StockHisDataAnalyzeService stockHisDataAnalyzeService;
+
     @Autowired
     private StockService stockService;
 
-//    @Scheduled(cron = "0/5 * * * * ?")
+    @Scheduled(cron = "0/5 * * * * ?")
     public void ma5Gtma10() {
         List<StockVo> stockVos = stockService.getAllDownHisDataStockVo();
         for (StockVo stockVo: stockVos) {
-            ThreadPoolExecutorManager.execute(new Ma5GtMa10Thread(stockVo));
+            ThreadPoolExecutorManager.execute(new MaNGtMaKThread(stockVo, 1, 2));
         }
-//        stockHisDataAnalyzeService.ma5Gtma10(new StockHisDataVo());
     }
 }

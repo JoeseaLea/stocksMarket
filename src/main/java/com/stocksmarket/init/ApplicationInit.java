@@ -4,6 +4,7 @@ import com.stocksmarket.EnvConfig;
 import com.stocksmarket.service.StockCodeAndNameDownService;
 import com.stocksmarket.service.StockHisDataDownService;
 import com.stocksmarket.thread.ThreadPoolExecutorManager;
+import com.stocksmarket.utils.DateFormatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,6 @@ public class ApplicationInit {
     }
 
     private void initParam() {
-        DateFormat df = new SimpleDateFormat("yyyyMMdd");
 
         EnvConfig.STOCK_CODE_NAME_DOWN_URI =
                 StringUtils.isEmpty(this.STOCK_CODE_NAME_DOWN_URI) ? "http://hq.sinajs.cn/list=" : this.STOCK_CODE_NAME_DOWN_URI;
@@ -45,9 +45,9 @@ public class ApplicationInit {
         EnvConfig.FIELDS =
                 StringUtils.isEmpty(this.FIELDS) ? "TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP" : this.FIELDS;
         EnvConfig.START_TIME =
-                StringUtils.isEmpty(this.START_TIME) ? "19900101" : this.START_TIME;
+                DateFormatUtil.parse(StringUtils.isEmpty(this.START_TIME) ? "19900101" : this.START_TIME, "yyyyMMdd");
         EnvConfig.END_TIME =
-                StringUtils.isEmpty(this.END_TIME) ? df.format(Calendar.getInstance().getTime()) : this.END_TIME;
+                DateFormatUtil.parse(StringUtils.isEmpty(this.END_TIME) ? DateFormatUtil.format(Calendar.getInstance().getTime(), "yyyyMMdd") : this.END_TIME, "yyyyMMdd");
         EnvConfig.LOCAL_DIR =
                 StringUtils.isEmpty(this.LOCAL_DIR) ? "stockHisDataCsv" : this.LOCAL_DIR;
         EnvConfig.MAX_QUEUE_TASK_SIZE =
