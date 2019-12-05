@@ -10,8 +10,6 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
 /**
@@ -27,8 +25,7 @@ public class StockHisDataDownUtil {
 
 
     public static boolean downloadStockHisDataCsv(StockVo stockVo, String localFilePath){
-        DateFormat df = new SimpleDateFormat("yyyyMMdd");
-        String startTime = df.format(stockVo.getLastHisDataDownDate());
+        String startTime = DateFormatUtil.format(stockVo.getLastHisDataDownDate(), "yyyyMMdd");
 
         for (int i = 0; i < 10; i ++) {
 
