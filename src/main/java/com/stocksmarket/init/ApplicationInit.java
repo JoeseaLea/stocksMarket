@@ -30,8 +30,11 @@ public class ApplicationInit {
         initParam();
         ThreadPoolExecutorManager.createExecutorService();
 
-        stockCodeAndNameDownService.downAllStockCodeAndName();
-        stockHisDataDownService.downAllStockHisData();
+        new Thread(() -> {
+            stockCodeAndNameDownService.downAllStockCodeAndName();
+            stockHisDataDownService.downAllStockHisData();
+        }).start();
+
     }
 
     private void initParam() {
