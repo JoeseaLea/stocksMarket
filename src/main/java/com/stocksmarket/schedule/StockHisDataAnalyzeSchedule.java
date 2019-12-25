@@ -27,7 +27,7 @@ public class StockHisDataAnalyzeSchedule {
     public void ma5Gtma10() {
         List<StockVo> stockVos = stockService.getAllDownHisDataStockVo();
         for (StockVo stockVo: stockVos) {
-            ThreadPoolExecutorManager.execute(new MaNGtMaKThread(stockVo, 1, 2));
+            ThreadPoolExecutorManager.execute(new MaNGtMaKThread(stockVo, 5, 10));
         }
     }
 }

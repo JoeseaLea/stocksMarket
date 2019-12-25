@@ -30,10 +30,10 @@ public class ApplicationInit {
         initParam();
         ThreadPoolExecutorManager.createExecutorService();
 
-        new Thread(() -> {
-            stockCodeAndNameDownService.downAllStockCodeAndName();
-            stockHisDataDownService.downAllStockHisData();
-        }).start();
+//        new Thread(() -> {
+//            stockCodeAndNameDownService.downAllStockCodeAndName();
+//            stockHisDataDownService.downAllStockHisData();
+//        }).start();
 
     }
 
@@ -70,3 +70,4 @@ public class ApplicationInit {
     @Value(value = "${stock.hisdata.down.maxQueueTaskSize:5}")
     private String MAX_QUEUE_TASK_SIZE;           //股票历史数据下载解析csv文件最大线程数（不配置默认为5）
 }
+
