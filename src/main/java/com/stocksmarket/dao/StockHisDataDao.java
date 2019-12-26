@@ -31,9 +31,27 @@ public interface StockHisDataDao {
     void insertOrUpdateStockHisData(@Param(value = "stockHisData") StockHisDataVo stockHisDataVo);
 
     /**
-     * 获取股票历史交易数据
-     * @param param 插叙参数：stockCode(String)、startIndex(int)、size(int)
+     * 获取股票历史交易数据(按交易日期升序排序)
+     * @param param 传入参数：hisDataTableName(String)、stockCode(String)、marketFlag(int)
+     * @return
+     */
+    List<StockHisDataVo> getAllStockHisDataAsc(Map<String,Object> param);
+    /**
+     * 获取股票历史交易数据(按交易日期降序排序)
+     * @param param 传入参数：hisDataTableName(String)、stockCode(String)、marketFlag(int)
+     * @return
+     */
+    List<StockHisDataVo> getAllStockHisDataDesc(Map<String,Object> param);
+    /**
+     * 获取股票历史交易数据(按交易日期升序排序)
+     * @param param 传入参数：hisDataTableName(String)、stockCode(String)、marketFlag(int)、startIndex(int)、size(int)
      * @return 股票历史交易数据
      */
-    List<StockHisDataVo> getStockHisData(Map<String,Object> param);
+    List<StockHisDataVo> getStockHisDataAsc(Map<String,Object> param);
+    /**
+     * 获取股票历史交易数据(按交易日期降序排序)
+     * @param param 传入参数：hisDataTableName(String)、stockCode(String)、marketFlag(int)、startIndex(int)、size(int)
+     * @return 股票历史交易数据
+     */
+    List<StockHisDataVo> getStockHisDataDesc(Map<String,Object> param);
 }

@@ -20,19 +20,29 @@ import java.util.Map;
 public class StockHisDataServiceImpl implements StockHisDataService {
     @Autowired
     private StockHisDataDao stockHisDataDao;
+
     @Override
-    public List<StockHisDataVo> getStockHisData(StockVo stockVo, int marketFlag, int size) {
-        return getStockHisData(stockVo, marketFlag, 0, size);
+    public List<StockHisDataVo> getAllStockHisDataAsc(StockVo stockVo, int marketFlag) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("hisDataTableName", stockVo.getHisDataTableName());
+        param.put("stockCode", stockVo.getCode());
+        param.put("marketFlag", marketFlag);
+        return stockHisDataDao.getAllStockHisDataAsc(param);
     }
 
     @Override
-    public List<StockHisDataVo> getStockHisData(StockVo stockVo, int marketFlag, int startIndex, int size) {
+    public List<StockHisDataVo> getStockHisDataDesc(StockVo stockVo, int marketFlag, int size) {
+        return getStockHisDataDesc(stockVo, marketFlag, 0, size);
+    }
+
+    @Override
+    public List<StockHisDataVo> getStockHisDataDesc(StockVo stockVo, int marketFlag, int startIndex, int size) {
         Map<String, Object> param = new HashMap<>();
         param.put("hisDataTableName", stockVo.getHisDataTableName());
         param.put("stockCode", stockVo.getCode());
         param.put("marketFlag", marketFlag);
         param.put("startIndex", startIndex);
         param.put("size", size);
-        return stockHisDataDao.getStockHisData(param);
+        return stockHisDataDao.getStockHisDataDesc(param);
     }
 }

@@ -81,7 +81,47 @@
             `market_flag`=#{stockHisData.marketFlag};
 	</insert>
 
-    <select id="getStockHisData" parameterType="java.util.Map" resultType="com.stocksmarket.vo.StockHisDataVo">
+    <select id="getAllStockHisDataAsc" parameterType="java.util.Map" resultType="com.stocksmarket.vo.StockHisDataVo">
+        select
+        <include refid="common_sql"></include>
+        from ${hisDataTableName}
+        <where>
+            `stock_code`=#{stockCode}
+            <if test="null != marketFlag">
+                and `market_flag`=#{marketFlag}
+            </if>
+        </where>
+        order by `trans_date` asc;
+    </select>
+
+    <select id="getAllStockHisDataDesc" parameterType="java.util.Map" resultType="com.stocksmarket.vo.StockHisDataVo">
+        select
+        <include refid="common_sql"></include>
+        from ${hisDataTableName}
+        <where>
+            `stock_code`=#{stockCode}
+            <if test="null != marketFlag">
+                and `market_flag`=#{marketFlag}
+            </if>
+        </where>
+        order by `trans_date` desc;
+    </select>
+
+    <select id="getStockHisDataAsc" parameterType="java.util.Map" resultType="com.stocksmarket.vo.StockHisDataVo">
+        select
+        <include refid="common_sql"></include>
+        from ${hisDataTableName}
+        <where>
+            `stock_code`=#{stockCode}
+            <if test="null != marketFlag">
+                and `market_flag`=#{marketFlag}
+            </if>
+        </where>
+        order by `trans_date` asc
+        limit #{startIndex}, #{size};
+    </select>
+
+    <select id="getStockHisDataDesc" parameterType="java.util.Map" resultType="com.stocksmarket.vo.StockHisDataVo">
         select
         <include refid="common_sql"></include>
         from ${hisDataTableName}

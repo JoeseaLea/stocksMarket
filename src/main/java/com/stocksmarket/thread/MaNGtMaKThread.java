@@ -31,7 +31,7 @@ public class MaNGtMaKThread implements Runnable {
 
         StockHisDataService stockHisDataService = SpringContextUtil.getBean(StockHisDataService.class);
 
-        List<StockHisDataVo> stockHisDataList = stockHisDataService.getStockHisData(stockVo, 1, size);
+        List<StockHisDataVo> stockHisDataList = stockHisDataService.getStockHisDataDesc(stockVo, 1, size);
 
         double[] maN = new double[2];
         double[] maK = new double[2];
