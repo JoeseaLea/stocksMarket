@@ -38,7 +38,7 @@ stock.hisdata.down:
     maxQueueTaskSize: 5
 
 # 项目启动时是否开始下载数据（是：true 否：false）
-start.down.hisdata: true
+start.down.hisdata: false
 
 #logging.level.com.stocksmarket.dao: debug
 logging:
