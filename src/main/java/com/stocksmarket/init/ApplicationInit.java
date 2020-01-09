@@ -30,10 +30,10 @@ public class ApplicationInit {
         initParam();
         ThreadPoolExecutorManager.createExecutorService();
 
-//        new Thread(() -> {
-//            stockCodeAndNameDownService.downAllStockCodeAndName();
-//            stockHisDataDownService.downAllStockHisData();
-//        }).start();
+        new Thread(() -> {
+            stockCodeAndNameDownService.downAllStockCodeAndName();
+            stockHisDataDownService.downAllStockHisData();
+        }).start();
 
     }
 
@@ -53,6 +53,8 @@ public class ApplicationInit {
                 StringUtils.isEmpty(this.LOCAL_DIR) ? "stockHisDataCsv" : this.LOCAL_DIR;
         EnvConfig.MAX_QUEUE_TASK_SIZE =
                 StringUtils.isEmpty(this.MAX_QUEUE_TASK_SIZE) ? 5 : Integer.parseInt(this.MAX_QUEUE_TASK_SIZE);
+        EnvConfig.START_DOWN_HISDATA =
+                StringUtils.isEmpty(this.START_DOWN_HISDATA) ? false : Boolean.parseBoolean(this.START_DOWN_HISDATA);
     }
 
     @Value("${stock.curdata.down.host:http://hq.sinajs.cn/list=}")
@@ -69,5 +71,7 @@ public class ApplicationInit {
     private String LOCAL_DIR;                     //股票历史数据下载csv文件保存路径（不配置默认当前目录下的stockHisData）
     @Value(value = "${stock.hisdata.down.maxQueueTaskSize:5}")
     private String MAX_QUEUE_TASK_SIZE;           //股票历史数据下载解析csv文件最大线程数（不配置默认为5）
+    @Value(value = "${start.down.hisdata:off}")
+    private String START_DOWN_HISDATA;            //项目启动时是否开始下载数据（是：true 否：false）
 }
 

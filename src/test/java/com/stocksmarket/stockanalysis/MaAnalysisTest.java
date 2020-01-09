@@ -24,7 +24,7 @@ public class MaAnalysisTest extends BaseTest {
 
     @Test
     public void maNGtMaK() {
-        final int n=2, k=8, m=4;
+        final int n=3, k=12, m=6;
 
         List<StockVo> stockVoList = stockService.getAllDownHisDataStockVo();
 
@@ -32,9 +32,7 @@ public class MaAnalysisTest extends BaseTest {
             List<StockHisDataVo> stockHisDataVoList = stockHisDataService.getAllStockHisDataAsc(stockVo, 1);
 
             int size = stockHisDataVoList.size();
-            double maN[] = new double[size];
-            double maK[] = new double[size];
-            double maM[] = new double[size];
+            double maN[] = new double[size], maK[] = new double[size], maM[] = new double[size];
 
             for (int i = 0; i < size; i ++) {
                 if (i + 1 >= n) {
