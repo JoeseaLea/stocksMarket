@@ -31,7 +31,6 @@ public class ApplicationInit {
         ThreadPoolExecutorManager.createExecutorService();
 
         new Thread(() -> {
-            stockCodeAndNameDownService.downAllStockCodeAndName();
             stockHisDataDownService.downAllStockHisData();
         }).start();
 
