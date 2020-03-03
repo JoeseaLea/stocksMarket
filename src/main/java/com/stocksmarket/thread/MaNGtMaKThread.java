@@ -33,17 +33,19 @@ public class MaNGtMaKThread implements Runnable {
 
         List<StockHisDataVo> stockHisDataList = stockHisDataService.getStockHisDataDesc(stockVo, 1, size);
 
-        double[] maN = new double[2];
-        double[] maK = new double[2];
+        if (stockHisDataList.size() >= size) {
+            double[] maN = new double[2];
+            double[] maK = new double[2];
 
-        maN[0] = StockDataAnalysisUtil.getAvgtClose(stockHisDataList.subList(0, n));
-        maN[1] = StockDataAnalysisUtil.getAvgtClose(stockHisDataList.subList(1, n + 1));
+            maN[0] = StockDataAnalysisUtil.getAvgtClose(stockHisDataList.subList(0, n));
+            maN[1] = StockDataAnalysisUtil.getAvgtClose(stockHisDataList.subList(1, n + 1));
 
-        maK[0] = StockDataAnalysisUtil.getAvgtClose(stockHisDataList.subList(0, k));
-        maK[1] = StockDataAnalysisUtil.getAvgtClose(stockHisDataList.subList(1, k + 1));
+            maK[0] = StockDataAnalysisUtil.getAvgtClose(stockHisDataList.subList(0, k));
+            maK[1] = StockDataAnalysisUtil.getAvgtClose(stockHisDataList.subList(1, k + 1));
 
-        if (maN[0] >= maK[0] && maN[1] < maK[1]) {
-            // TODO: 2019/12/23 提醒购买股票 
+            if (maN[0] >= maK[0] && maN[1] < maK[1]) {
+                // TODO: 2019/12/23 提醒购买股票
+            }
         }
     }
 }

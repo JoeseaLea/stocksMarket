@@ -4,7 +4,7 @@ import com.stocksmarket.EnvConfig;
 import com.stocksmarket.service.StockCodeAndNameDownService;
 import com.stocksmarket.service.StockHisDataDownService;
 import com.stocksmarket.thread.ThreadPoolExecutorManager;
-import com.stocksmarket.utils.DateFormatUtil;
+import com.stocksmarket.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -31,7 +31,12 @@ public class ApplicationInit {
         ThreadPoolExecutorManager.createExecutorService();
 
         new Thread(() -> {
-            stockHisDataDownService.downAllStockHisData();
+            if (EnvConfig.START_DOWN_STOCK_CODE_AND_NAME) {
+                stockCodeAndNameDownService.downAllStockCodeAndName();
+            }
+            if (EnvConfig.START_DOWN_STOCK_HISDATA) {
+                stockHisDataDownService.downAllStockHisData();
+            }
         }).start();
 
     }
@@ -45,15 +50,17 @@ public class ApplicationInit {
         EnvConfig.FIELDS =
                 StringUtils.isEmpty(this.FIELDS) ? "TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP" : this.FIELDS;
         EnvConfig.START_TIME =
-                DateFormatUtil.parse(StringUtils.isEmpty(this.START_TIME) ? "19900101" : this.START_TIME, "yyyyMMdd");
+                DateUtil.parse(StringUtils.isEmpty(this.START_TIME) ? "19900101" : this.START_TIME, "yyyyMMdd");
         EnvConfig.END_TIME =
-                DateFormatUtil.parse(StringUtils.isEmpty(this.END_TIME) ? DateFormatUtil.format(Calendar.getInstance().getTime(), "yyyyMMdd") : this.END_TIME, "yyyyMMdd");
+                DateUtil.parse(StringUtils.isEmpty(this.END_TIME) ? DateUtil.format(Calendar.getInstance().getTime(), "yyyyMMdd") : this.END_TIME, "yyyyMMdd");
         EnvConfig.LOCAL_DIR =
                 StringUtils.isEmpty(this.LOCAL_DIR) ? "stockHisDataCsv" : this.LOCAL_DIR;
         EnvConfig.MAX_QUEUE_TASK_SIZE =
                 StringUtils.isEmpty(this.MAX_QUEUE_TASK_SIZE) ? 5 : Integer.parseInt(this.MAX_QUEUE_TASK_SIZE);
-        EnvConfig.START_DOWN_HISDATA =
-                StringUtils.isEmpty(this.START_DOWN_HISDATA) ? false : Boolean.parseBoolean(this.START_DOWN_HISDATA);
+        EnvConfig.START_DOWN_STOCK_CODE_AND_NAME =
+                StringUtils.isEmpty(this.START_DOWN_STOCK_CODE_AND_NAME) ? false : Boolean.parseBoolean(this.START_DOWN_STOCK_CODE_AND_NAME);
+        EnvConfig.START_DOWN_STOCK_HISDATA =
+                StringUtils.isEmpty(this.START_DOWN_STOCK_HISDATA) ? false : Boolean.parseBoolean(this.START_DOWN_STOCK_HISDATA);
     }
 
     @Value("${stock.curdata.down.host:http://hq.sinajs.cn/list=}")
@@ -70,7 +77,9 @@ public class ApplicationInit {
     private String LOCAL_DIR;                     //股票历史数据下载csv文件保存路径（不配置默认当前目录下的stockHisData）
     @Value(value = "${stock.hisdata.down.maxQueueTaskSize:5}")
     private String MAX_QUEUE_TASK_SIZE;           //股票历史数据下载解析csv文件最大线程数（不配置默认为5）
-    @Value(value = "${start.down.hisdata:off}")
-    private String START_DOWN_HISDATA;            //项目启动时是否开始下载数据（是：true 否：false）
+    @Value(value = "${start.down.stockCodeAndName:off}")
+    private String START_DOWN_STOCK_CODE_AND_NAME;//项目启动时是否开始下载股票代码及名称（是：true 否：false）
+    @Value(value = "${start.down.stockHisData:off}")
+    private String START_DOWN_STOCK_HISDATA;      //项目启动时是否开始下载股票历史数据（是：true 否：false）
 }
 

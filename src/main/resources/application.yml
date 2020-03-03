@@ -1,10 +1,9 @@
-﻿
-spring:
+﻿spring:
   datasource:
-    url: jdbc:mysql://10.1.141.87:3306/stocks_market?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    url: jdbc:mysql://127.0.0.1:3306/stocks_market?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: Stocks123!@#
+    password: ********
     druid:
       initial-size: 10
       min-idle: 10
@@ -18,6 +17,10 @@ mybatis:
   # type-aliases-package: com.grgbanking.**.entity
   # mapper映射文件
   mapper-locations: classpath:mybatis/mappers/mysql/**/*.xml
+
+start:
+  downAllStockCodeAndName: on
+  downAllStockHisData: on
 
 # 股票实时数据下载接口地址
 stock.curdata.down.host: http://hq.sinajs.cn/list=
@@ -38,7 +41,12 @@ stock.hisdata.down:
     maxQueueTaskSize: 5
 
 # 项目启动时是否开始下载数据（是：true 否：false）
-start.down.hisdata: false
+# stockCodeAndName: 股票代码及名称
+# stockHisData: 股票历史数据
+start:
+  down:
+    stockCodeAndName: false
+    stockHisData: false
 
 #logging.level.com.stocksmarket.dao: debug
 logging:

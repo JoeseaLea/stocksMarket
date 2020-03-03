@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -13,8 +14,8 @@ import java.util.Date;
  * <p>@date : 2019/12/3</p>
  * <p>@description : </p>
  */
-public class DateFormatUtil {
-    private static final Logger logger = LoggerFactory.getLogger(DateFormatUtil.class);
+public class DateUtil {
+    private static final Logger logger = LoggerFactory.getLogger(DateUtil.class);
 
     public static String format(Date date, String format) {
         DateFormat df = new SimpleDateFormat(format);
@@ -30,5 +31,13 @@ public class DateFormatUtil {
             logger.error("日期格式化错误(date=" + date + ", format=" + format + "):", e);
         }
         return d;
+    }
+
+    public static Date add(Date date, int field, int amount) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        calendar.add(field, amount);
+        return calendar.getTime();
     }
 }

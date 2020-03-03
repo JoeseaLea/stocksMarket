@@ -10,6 +10,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 /**
@@ -25,7 +26,8 @@ public class StockHisDataDownUtil {
 
 
     public static boolean downloadStockHisDataCsv(StockVo stockVo, String localFilePath){
-        String startTime = DateFormatUtil.format(stockVo.getLastHisDataDownDate(), "yyyyMMdd");
+
+        String startTime = DateUtil.format(DateUtil.add(stockVo.getLastHisDataDownDate(), Calendar.DATE, -1), "yyyyMMdd");
 
         for (int i = 0; i < 10; i ++) {
 
