@@ -3,7 +3,7 @@
     url: jdbc:mysql://127.0.0.1:3306/stocks_market?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: ********
+    password: Stocks123!@#
     druid:
       initial-size: 10
       min-idle: 10
@@ -17,10 +17,6 @@ mybatis:
   # type-aliases-package: com.grgbanking.**.entity
   # mapper映射文件
   mapper-locations: classpath:mybatis/mappers/mysql/**/*.xml
-
-start:
-  downAllStockCodeAndName: on
-  downAllStockHisData: on
 
 # 股票实时数据下载接口地址
 stock.curdata.down.host: http://hq.sinajs.cn/list=
