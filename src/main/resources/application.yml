@@ -3,7 +3,7 @@
     url: jdbc:mysql://127.0.0.1:3306/stocks_market?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: Stocks123!@#
+    password: *******
     druid:
       initial-size: 10
       min-idle: 10
